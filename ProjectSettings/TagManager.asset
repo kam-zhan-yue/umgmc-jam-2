@@ -57,6 +57,15 @@ TagManager:
   - name: Platforms
     uniqueID: 600026165
     locked: 0
+  - name: Future Platforms
+    uniqueID: 3183026937
+    locked: 0
+  - name: Present Platforms
+    uniqueID: 4027125723
+    locked: 0
+  - name: Past Platforms
+    uniqueID: 1327293767
+    locked: 0
   - name: Foreground
     uniqueID: 1795597123
     locked: 0
