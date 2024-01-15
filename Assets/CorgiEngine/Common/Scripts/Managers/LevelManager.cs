@@ -132,6 +132,7 @@ namespace MoreMountains.CorgiEngine
 		[Tooltip("the level limits, camera and player won't go beyond this point.")]
 		public Bounds LevelBounds = new Bounds(Vector3.zero,Vector3.one*10);
 
+
 		[MMInspectorButton("GenerateColliderBounds")]
 		public bool ConvertToColliderBoundsButton;
 		public Collider BoundsCollider { get; protected set; }
