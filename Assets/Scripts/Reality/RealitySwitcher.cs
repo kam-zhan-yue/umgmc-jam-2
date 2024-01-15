@@ -56,11 +56,13 @@ public class RealitySwitcher : MonoBehaviour
         if (realityManager.TryGetReality(previousTimeline, out Reality previousReality))
         {
             previousReality.Show();
+            previousReality.DeactivateColliders();
         }
 
         if (realityManager.TryGetReality(timeline, out Reality reality))
         {
             reality.Show();
+            reality.ActivateColliders();
         }
         
         Debug.Log($"Transitioning to: {timeline}");

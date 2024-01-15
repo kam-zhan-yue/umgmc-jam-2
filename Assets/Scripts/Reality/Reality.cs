@@ -1,12 +1,12 @@
 using Common;
-using Unity.Collections;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Reality : MonoBehaviour
 {
     public Timeline timeline;
     
-    [SerializeField, ReadOnly] private SpriteRenderer[] spriteRenderers;
+    [ShowInInspector, ReadOnly] private RealityObject[] _realityObjects;
 
     private void Awake()
     {
@@ -16,44 +16,66 @@ public class Reality : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
-        for (int i = 0; i < spriteRenderers.Length; ++i)
+        for (int i = 0; i < _realityObjects.Length; ++i)
         {
-            spriteRenderers[i].gameObject.SetActive(true);
+            _realityObjects[i].gameObject.SetActive(true);
         }
     }
 
     public void Hide()
     {
         gameObject.SetActive(false);
-        for (int i = 0; i < spriteRenderers.Length; ++i)
+        for (int i = 0; i < _realityObjects.Length; ++i)
         {
-            spriteRenderers[i].gameObject.SetActive(false);
+            _realityObjects[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void ActivateColliders()
+    {
+        for (int i = 0; i < _realityObjects.Length; ++i)
+        {
+            _realityObjects[i].ActivateCollider();
+        }
+    }
+
+    public void DeactivateColliders()
+    {
+        for (int i = 0; i < _realityObjects.Length; ++i)
+        {
+            _realityObjects[i].DeactivateCollider();
         }
     }
 
     public void SetVisibleInsideMask()
     {
-        for (int i = 0; i < spriteRenderers.Length; ++i)
+        for (int i = 0; i < _realityObjects.Length; ++i)
         {
-            spriteRenderers[i].maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+            _realityObjects[i].SetVisibleInsideMask();
         }
     }
     
     public void SetVisibleOutsideMask()
     {
-        for (int i = 0; i < spriteRenderers.Length; ++i)
+        for (int i = 0; i < _realityObjects.Length; ++i)
         {
-            spriteRenderers[i].maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+            _realityObjects[i].SetVisibleOutsideMask();
         }
     }
 
     private void OnValidate()
     {
+        UpdateReality();
+    }
+
+    [Button]
+    private void UpdateReality()
+    {
         int childCount = transform.childCount;
-        spriteRenderers = new SpriteRenderer[childCount];
-        for (int i = 0; i < spriteRenderers.Length; ++i)
+        _realityObjects = new RealityObject[childCount];
+        for (int i = 0; i < _realityObjects.Length; ++i)
         {
-            spriteRenderers[i] = transform.GetChild(i).GetComponent<SpriteRenderer>();
+            _realityObjects[i] = transform.GetChild(i).GetComponent<RealitySprite>();
         }
     }
 }

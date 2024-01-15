@@ -1,8 +1,10 @@
+using Common;
 using UnityEngine;
 
-public class RealityObject
+public abstract class RealityObject : MonoBehaviour
 {
-    public Timeline timeline;
-    public Reality reality;
-    public SpriteMask spriteMask;
+    public abstract void SetVisibleInsideMask();
+    public abstract void SetVisibleOutsideMask();
+    public abstract void ActivateCollider();
+    public abstract void DeactivateCollider();
 }
