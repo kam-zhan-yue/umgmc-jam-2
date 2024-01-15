@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7109921532465206998}
   - component: {fileID: 7033821498859159499}
   m_Layer: 0
-  m_Name: Slope
+  m_Name: Slope 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5812556136658818455}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.37770334, w: 0.9259267}
+  m_LocalRotation: {x: 0, y: 0, z: -0.37770346, w: 0.9259266}
   m_LocalPosition: {x: 8.472, y: 23.206, z: 0}
   m_LocalScale: {x: 1.2836, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 44.383}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -44.383}
 --- !u!212 &980346590201029710
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -146,6 +146,6 @@ MonoBehaviour:
   AutoTriggerSetup: 1
   ApplicationMode: 1
   ForceMode: 0
-  AddedForce: {x: -100, y: 0}
+  AddedForce: {x: 100, y: 0}
   ForceApplicationCooldownDuration: {x: 0, y: 0.25}
   ResetForces: 1
