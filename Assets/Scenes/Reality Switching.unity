@@ -6761,6 +6761,7 @@ GameObject:
   - component: {fileID: 1183305442}
   - component: {fileID: 1183305441}
   - component: {fileID: 1183305440}
+  - component: {fileID: 1183305445}
   m_Layer: 8
   m_Name: Future Platforms
   m_TagString: Untagged
@@ -7120,6 +7121,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1183305445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183305438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c7223cf76f8437f884d0baecbe213f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: 1
 --- !u!212 &1185019779 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 212469583139951880, guid: 467688d9b23c245d4ad3ce3e5c2c62e9, type: 3}
@@ -7139,6 +7153,7 @@ GameObject:
   - component: {fileID: 1190307480}
   - component: {fileID: 1190307479}
   - component: {fileID: 1190307478}
+  - component: {fileID: 1190307483}
   m_Layer: 8
   m_Name: Past Platforms
   m_TagString: Untagged
@@ -7498,6 +7513,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1190307483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190307476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c7223cf76f8437f884d0baecbe213f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: 2
 --- !u!1 &1198997489
 GameObject:
   m_ObjectHideFlags: 0
@@ -9149,6 +9177,7 @@ GameObject:
   - component: {fileID: 1571460563}
   - component: {fileID: 1571460562}
   - component: {fileID: 1571460561}
+  - component: {fileID: 1571460566}
   m_Layer: 8
   m_Name: Present Platforms
   m_TagString: Untagged
@@ -9508,6 +9537,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1571460566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571460559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c7223cf76f8437f884d0baecbe213f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeline: 0
 --- !u!212 &1577505915 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 212285921351899458, guid: ffec0248e1f5545b7add5c7354363eb5, type: 3}

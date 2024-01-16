@@ -28,15 +28,15 @@ public class RealitySwitcher : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !_transitioning)
-        {
-            Transition(Timeline.Present);
-        }
-        if (Input.GetKeyDown(KeyCode.W) && !_transitioning)
+        if (Input.GetKeyDown(KeyCode.J) && !_transitioning)
         {
             Transition(Timeline.Past);
         }
-        if (Input.GetKeyDown(KeyCode.E) && !_transitioning)
+        if (Input.GetKeyDown(KeyCode.K) && !_transitioning)
+        {
+            Transition(Timeline.Present);
+        }
+        if (Input.GetKeyDown(KeyCode.L) && !_transitioning)
         {
             Transition(Timeline.Future);
         }

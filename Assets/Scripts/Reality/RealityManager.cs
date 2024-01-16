@@ -19,7 +19,7 @@ public class RealityManager : MonoBehaviour, IRealityManager
         foreach (KeyValuePair<Timeline, Reality> reality in _realities)
         {
             if (reality.Key != timeline)
-                reality.Value.gameObject.SetActive(false);
+                reality.Value.Hide();
         }
     }
 
