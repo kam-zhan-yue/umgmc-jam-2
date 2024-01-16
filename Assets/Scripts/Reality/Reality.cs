@@ -9,11 +9,6 @@ public class Reality : MonoBehaviour
     [ShowInInspector, ReadOnly] private RealityTiles _realityTiles;
     [ShowInInspector, ReadOnly] private RealityObject[] _realityObjects;
 
-    private void Awake()
-    {
-        ServiceLocator.Instance.Get<IRealityManager>().RegisterReality(this);
-    }
-
     public void Show()
     {
         gameObject.SetActive(true);
@@ -76,7 +71,7 @@ public class Reality : MonoBehaviour
     }
 
     [Button]
-    private void UpdateReality()
+    public void UpdateReality()
     {
         int childCount = transform.childCount;
         _realityObjects = new RealityObject[childCount];

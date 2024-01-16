@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Common;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class RealityManager : MonoBehaviour, IRealityManager
 {
-    private readonly Dictionary<Timeline, Reality> _realities = new Dictionary<Timeline, Reality>();
+    [NonSerialized, ShowInInspector, ReadOnly]
+    private Reality[] _realities = Array.Empty<Reality>();
 
     private void Awake()
     {
@@ -16,28 +18,48 @@ public class RealityManager : MonoBehaviour, IRealityManager
     public void InitReality(Timeline timeline)
     {
         SetVisible(timeline);
-        foreach (KeyValuePair<Timeline, Reality> reality in _realities)
+        for (int i = 0; i < _realities.Length; ++i)
         {
-            if (reality.Key != timeline)
-                reality.Value.Hide();
+            if (_realities[i].timeline != timeline)
+            {
+                _realities[i].Hide();
+            }
         }
-    }
-
-    public void RegisterReality(Reality reality)
-    {
-        _realities.Add(reality.timeline, reality);
     }
 
     public bool TryGetReality(Timeline timeline, out Reality reality)
     {
-        return _realities.TryGetValue(timeline, out reality);
+        for (int i = 0; i < _realities.Length; ++i)
+        {
+            if (_realities[i].timeline == timeline)
+            {
+                reality = _realities[i];
+                return true;
+            }
+        }
+
+        reality = null;
+        return false;
+    }
+
+    public Reality GetReality(Timeline timeline)
+    {
+        for (int i = 0; i < _realities.Length; ++i)
+        {
+            if (_realities[i].timeline == timeline)
+            {
+                return _realities[i];
+            }
+        }
+
+        return null;
     }
 
     public void SetVisible(Timeline timeline)
     {
-        Reality future = _realities[Timeline.Future];
-        Reality present = _realities[Timeline.Present];
-        Reality past = _realities[Timeline.Past];
+        Reality future = GetReality(Timeline.Future);
+        Reality present = GetReality(Timeline.Present);
+        Reality past = GetReality(Timeline.Past);
         switch (timeline)
         {
             case Timeline.Present:
@@ -57,6 +79,21 @@ public class RealityManager : MonoBehaviour, IRealityManager
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    private void OnValidate()
+    {
+        UpdateReality();
+    }
+
+    [Button]
+    private void UpdateReality()
+    {
+        _realities = FindObjectsOfType<Reality>();
+        for (int i = 0; i < _realities.Length; ++i)
+        {
+            _realities[i].UpdateReality();
         }
     }
 }
