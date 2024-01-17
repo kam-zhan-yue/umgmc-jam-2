@@ -100,6 +100,10 @@ namespace MoreMountains.CorgiEngine
 		protected const string _walkingAnimationParameterName = "Walking";
 		protected int _speedAnimationParameter;
 		protected int _walkingAnimationParameter;
+		
+		//Custom Code
+		public float HorizontalSpeed => _normalizedHorizontalSpeed;
+		public bool Walking => _movement.CurrentState == CharacterStates.MovementStates.Walking;
 
 		/// <summary>
 		/// On Initialization, we set our movement speed to WalkSpeed.

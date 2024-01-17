@@ -122,6 +122,11 @@ namespace MoreMountains.CorgiEngine
 		protected int _doubleJumpingAnimationParameter;
 		protected int _hitTheGroundAnimationParameter;
 		protected int _numberOfJumpsLeftAnimationParameter;
+		
+		//Custom Code
+		public bool Jumping => _movement.CurrentState == CharacterStates.MovementStates.Jumping;
+		public bool DoubleJumping => _doubleJumping;
+		public bool HitTheGround => _controller.State.JustGotGrounded;
 
 		/// Evaluates the jump restrictions
 		public virtual bool JumpAuthorized 

@@ -211,6 +211,9 @@ namespace MoreMountains.CorgiEngine
 		protected CharacterPersistence _characterPersistence;
 		protected Coroutine _conditionChangeCoroutine;
 		protected CharacterStates.CharacterConditions _lastState;
+		
+		//Custom Code
+		public bool Grounded => _controller.State.IsGrounded;
 
 		/// <summary>
 		/// Initializes this instance of the character

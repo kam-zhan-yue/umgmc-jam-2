@@ -47,6 +47,9 @@ namespace MoreMountains.CorgiEngine
 		protected int _runningAnimationParameter;
 		protected bool _runningStarted = false;
 
+		//Custom Code
+		public bool Running => _movement.CurrentState == CharacterStates.MovementStates.Running;
+		
 		/// <summary>
 		/// At the beginning of each cycle, we check if we've pressed or released the run button
 		/// </summary>

@@ -71,6 +71,9 @@ namespace MoreMountains.CorgiEngine
 		protected float _lastTimeWallClinging = -float.MaxValue;
 		protected bool _hasWallJumped = false;
 		
+		//Custom Code
+		public bool WallJumping => _movement.CurrentState == CharacterStates.MovementStates.WallJumping;
+		
 		/// <summary>
 		/// On start, we store our characterJump component
 		/// </summary>

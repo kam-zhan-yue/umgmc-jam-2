@@ -44,6 +44,9 @@ namespace MoreMountains.CorgiEngine
 		// animation parameters
 		protected const string _wallClingingAnimationParameterName = "WallClinging";
 		protected int _wallClingingAnimationParameter;
+		
+		//Custom Code
+		public bool IsWallClinging => _movement.CurrentState == CharacterStates.MovementStates.WallClinging;
 
 		/// <summary>
 		/// Checks the input to see if we should enter the WallClinging state

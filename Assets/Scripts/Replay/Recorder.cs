@@ -8,13 +8,27 @@ public class Recorder : MonoBehaviour
     [SerializeField] private GameObject replayObjectPrefab;
     private Recording _recording;
     public Queue<ReplayData> recordingQueue { get; private set; } = new();
-    private bool isDoingReplay = false;
 
+    private RecordState _recordState;
+
+    private enum RecordState
+    {
+        Idle = 0, 
+        Recording = 1,
+        Replaying = 2,
+    }
+    
     private void Start()
     {
         IEventManager eventManager = ServiceLocator.Instance.Get<IEventManager>();
+        eventManager.SubStartLevel(OnStartLevel);
         eventManager.SubGoalReached(OnGoalReached);
         eventManager.SubRestartLevel(OnRestartLevel);
+    }
+
+    private void OnStartLevel()
+    {
+        StartRecording();
     }
 
     private void OnGoalReached()
@@ -27,31 +41,49 @@ public class Recorder : MonoBehaviour
         RestartReplay();
     }
 
+    private void StartRecording()
+    {
+        _recordState = RecordState.Recording;
+    }
+
     private void Update()
     {
-        if (!isDoingReplay)
+        switch (_recordState)
         {
-            return;
-        }
+            case RecordState.Idle:
+                break;
+            case RecordState.Recording:
+                break;
+            case RecordState.Replaying:
 
-        bool hasNextFrame = _recording.PlayNextFrame();
+                bool hasNextFrame = _recording.PlayNextFrame();
         
-        //Check if we are finished, so that we can restart
-        if (!hasNextFrame)
-        {
-            RestartReplay();
+                //Check if we are finished, so that we can restart
+                if (!hasNextFrame)
+                {
+                    RestartReplay();
+                }
+                break;
         }
     }
 
     public void RecordFrame(ReplayData data)
     {
-        recordingQueue.Enqueue(data);
-        Debug.Log($"Data: {data}");
+        if (_recordState == RecordState.Recording)
+        {
+            recordingQueue.Enqueue(data);
+            Debug.Log($"Data: {data}");
+        }
     }
 
     private void StartReplay()
     {
-        isDoingReplay = true;
+        //Don't start the replay unless there is data.
+        if (recordingQueue.Count == 0)
+        {
+            return;
+        }
+        _recordState = RecordState.Replaying;
         //Initialise recording
         _recording = new Recording(recordingQueue);
         //Reset the current recording queue for next record
@@ -62,13 +94,13 @@ public class Recorder : MonoBehaviour
 
     private void RestartReplay()
     {
-        isDoingReplay = true;
+        _recordState = RecordState.Replaying;
         _recording.Restart();
     }
 
     private void ResetReplay()
     {
-        isDoingReplay = false;
+        _recordState = RecordState.Idle;
         _recording.DestroyReplayObject();
         _recording = null;
     }
@@ -78,5 +110,6 @@ public class Recorder : MonoBehaviour
         IEventManager eventManager = ServiceLocator.Instance.Get<IEventManager>();
         eventManager.UnSubGoalReached(OnGoalReached);
         eventManager.UnSubRestartLevel(OnRestartLevel);
+        eventManager.UnSubStartLevel(OnStartLevel);
     }
 }
