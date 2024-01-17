@@ -13,6 +13,15 @@ MonoBehaviour:
   m_Name: TestScript
   m_EditorClassIdentifier: 
   useCamera: 1
-  playOnce: 1
-  actors: []
-  groups: []
+  playOnce: 0
+  actors:
+  - Spaceman
+  groups:
+  - actions:
+    - id: Spaceman
+      type: 0
+      actor: Spaceman
+      custom: 0
+      customName: 
+      message: Hiiii
+      animationName: 

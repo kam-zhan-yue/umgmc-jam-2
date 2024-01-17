@@ -42,14 +42,15 @@ public class DialogueEvent : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collider2D)
+    private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log($"Collided with: {other}");
         //If already played, then don't bother
         if (script.playOnce && _played)
             return;
-        if (collider2D.gameObject.TryGetComponent(out DialogueTrigger _))
+        if (other.gameObject.TryGetComponent(out DialogueTrigger _))
         {
-            if (collider2D.gameObject.TryGetComponent(out Rigidbody2D rb))
+            if (other.gameObject.TryGetComponent(out Rigidbody2D rb))
             {
                 rb.velocity = Vector2.zero;
             }
