@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cainos.LucidEditor;
 using Common;
+using MoreMountains.CorgiEngine;
 using UnityEngine;
 
 public class DialogueManager : MonoBehaviour, IDialogueManager
@@ -18,11 +19,13 @@ public class DialogueManager : MonoBehaviour, IDialogueManager
     {
         Debug.Log($"Start Dialogue: {dialogueEvent}");
         dialogueEventStarted.Raise();
+        LevelManager.Instance.FreezeCharacters();
     }
 
     public void EndDialogue(DialogueEvent dialogueEvent)
     {
         Debug.Log($"End Dialogue: {dialogueEvent}");
         dialogueEventEnded.Raise();
+        LevelManager.Instance.UnFreezeCharacters();
     }
 }
