@@ -32,6 +32,7 @@ public class DialogueEvent : MonoBehaviour
     private int _finishedEvents = 0;
     private int _totalEvents = 0;
     private bool _played = false;
+    private bool _started = false;
 
     private void Awake()
     {
@@ -39,7 +40,14 @@ public class DialogueEvent : MonoBehaviour
         {
             _actorDictionary.Add(actors[i].key, actors[i]);
         }
+    }
 
+    private void Update()
+    {
+        if (_started && Input.GetKeyDown(KeyCode.E))
+        {
+            MoveDialogue();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -64,6 +72,7 @@ public class DialogueEvent : MonoBehaviour
         //If already played, then don't bother
         if (script.playOnce && _played)
             return;
+        _started = true;
         _dialogueQueue.Clear();
         for (int i = 0; i < script.groups.Count; ++i)
             _dialogueQueue.Enqueue(script.groups[i]);
@@ -86,11 +95,6 @@ public class DialogueEvent : MonoBehaviour
         {
             EndEvent();
         }
-    }
-    
-    private void NextStarted(InputAction.CallbackContext callbackContext)
-    {
-        MoveDialogue();
     }
     
     [Button]
@@ -188,6 +192,7 @@ public class DialogueEvent : MonoBehaviour
     private void EndEvent()
     {
         _played = true;
+        _started = false;
         ServiceLocator.Instance.Get<IDialogueManager>().EndDialogue(this);
     }
 }
