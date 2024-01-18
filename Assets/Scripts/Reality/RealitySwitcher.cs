@@ -21,24 +21,58 @@ public class RealitySwitcher : MonoBehaviour
     private Timeline timeline = Timeline.Present;
     private bool _transitioning = false;
 
+
+    [SerializeField] private float realitySwitchCooldown = 3f;
+    [SerializeField] private float realityInstabilityCooldown = 3f;
+    private StopWatch realitySwitcherTimer;
+    private StopWatch switchBackTimer;
     private void Start()
     {
         ServiceLocator.Instance.Get<IRealityManager>().InitReality(Timeline.Present);
+        realitySwitcherTimer = new(realitySwitchCooldown);
+        switchBackTimer = new(realityInstabilityCooldown);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J) && !_transitioning)
+        if(realitySwitcherTimer.UpdateTimer() && !realitySwitcherTimer.isChecked) // can swtich time
         {
-            Transition(Timeline.Past);
+            bool alteredTime = false;
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !_transitioning)
+            {
+                Transition(Timeline.Past);
+                alteredTime = true;
+                //Debug.Log("Timeline to the past");
+            }
+            //if (Input.GetKeyDown(KeyCode.Mouse2) && !_transitioning)
+            //{
+            //    //The reality will shift back automatically for the instability of time and space distortion 
+            //    //Transition(Timeline.Present);
+            //}
+            if (Input.GetKeyDown(KeyCode.Mouse1) && !_transitioning)
+            {
+                Transition(Timeline.Future);
+                alteredTime = true;
+                //Debug.Log("Timeline to the future");
+            }
+            if (alteredTime)
+            {
+                switchBackTimer = new(realityInstabilityCooldown);
+                realitySwitcherTimer.isChecked = true;
+            }
         }
-        if (Input.GetKeyDown(KeyCode.K) && !_transitioning)
+        else //you cant swtich time, when the switch back timer reaches 0, switch back to present, and you can use the switcher again
         {
-            Transition(Timeline.Present);
-        }
-        if (Input.GetKeyDown(KeyCode.L) && !_transitioning)
-        {
-            Transition(Timeline.Future);
+            if(switchBackTimer.UpdateTimer())
+            {
+                if (timeline != Timeline.Present)
+                {
+                    Transition(Timeline.Present);
+                    //Debug.Log("Timeline disto back to present");
+                    realitySwitcherTimer.ForceReset();
+                }
+            }
+
         }
     }
 
