@@ -9,7 +9,7 @@ public class RealityTiles : RealityObject
 {
     public Timeline timeline;
     [NonSerialized, ShowInInspector, ReadOnly] private TilemapRenderer _tilemapRenderer;
-    [NonSerialized, ShowInInspector, ReadOnly] private Collider2D _collider;
+    [NonSerialized, ShowInInspector, ReadOnly] private TilemapCollider2D _tilemapCollider2D;
 
     public override void SetVisibleInsideMask()
     {
@@ -23,17 +23,17 @@ public class RealityTiles : RealityObject
 
     public override void ActivateCollider()
     {
-        _collider.enabled = true;
+        _tilemapCollider2D.enabled = true;
     }
 
     public override void DeactivateCollider()
     {
-        _collider.enabled = false;
+        _tilemapCollider2D.enabled = false;
     }
 
     private void OnValidate()
     {
         _tilemapRenderer = GetComponent<TilemapRenderer>();
-        _collider = GetComponent<Collider2D>();
+        _tilemapCollider2D = GetComponent<TilemapCollider2D>();
     }
 }
