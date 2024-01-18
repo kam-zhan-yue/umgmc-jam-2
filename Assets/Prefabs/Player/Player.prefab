@@ -35,7 +35,6 @@ GameObject:
   - component: {fileID: 943545352713886185}
   - component: {fileID: 122666836402403726}
   - component: {fileID: 1904790735066938844}
-  - component: {fileID: 4969095205212155705}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -874,18 +873,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   replayObjectPrefab: {fileID: 9068799589237389024, guid: b467d385f6a194aa19eb3a55c5360a81, type: 3}
---- !u!114 &4969095205212155705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d96830b4bb1a940c1b617b8bb0b21dd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &100010
 GameObject:
   m_ObjectHideFlags: 0
@@ -6319,9 +6306,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 400000}
     m_Modifications:
+    - target: {fileID: 146643021116478589, guid: 2e71ca3d8eb024f86a314a60e8346043, type: 3}
+      propertyPath: m_MaskAlphaCutoff
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3526525860638452494, guid: 2e71ca3d8eb024f86a314a60e8346043, type: 3}
       propertyPath: m_Name
       value: Reality Switcher
+      objectReference: {fileID: 0}
+    - target: {fileID: 5913084630792246079, guid: 2e71ca3d8eb024f86a314a60e8346043, type: 3}
+      propertyPath: scaleDuration
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6965447391262753667, guid: 2e71ca3d8eb024f86a314a60e8346043, type: 3}
       propertyPath: m_LocalPosition.x
