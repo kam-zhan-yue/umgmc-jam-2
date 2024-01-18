@@ -45,14 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f896531c81a33407ba5d5dda44b7765e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  future: {fileID: 0}
-  present: {fileID: 0}
-  past: {fileID: 0}
   presentMask: {fileID: 146643021116478589}
   futureMask: {fileID: 4120653413123070756}
   pastMask: {fileID: 6861365256140310922}
+  presentBackgroundMask: {fileID: 4597942972417139183}
+  futureBackgroundMask: {fileID: 7655826422551137304}
+  pastBackgroundMask: {fileID: 5763733147746808969}
   targetScale: {x: 20, y: 20, z: 20}
   scaleDuration: 0.5
+  realitySwitchCooldown: 3
+  realityInstabilityCooldown: 3
 --- !u!1001 &4384773695572551332
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -125,8 +127,23 @@ SpriteMask:
   m_CorrespondingSourceObject: {fileID: 429627587097509248, guid: 59d5a720cb5ab46c7915210af704a8db, type: 3}
   m_PrefabInstance: {fileID: 4384773695572551332}
   m_PrefabAsset: {fileID: 0}
+--- !u!331 &4597942972417139183 stripped
+SpriteMask:
+  m_CorrespondingSourceObject: {fileID: 222634285825869643, guid: 59d5a720cb5ab46c7915210af704a8db, type: 3}
+  m_PrefabInstance: {fileID: 4384773695572551332}
+  m_PrefabAsset: {fileID: 0}
+--- !u!331 &5763733147746808969 stripped
+SpriteMask:
+  m_CorrespondingSourceObject: {fileID: 8297104629918044717, guid: 59d5a720cb5ab46c7915210af704a8db, type: 3}
+  m_PrefabInstance: {fileID: 4384773695572551332}
+  m_PrefabAsset: {fileID: 0}
 --- !u!331 &6861365256140310922 stripped
 SpriteMask:
   m_CorrespondingSourceObject: {fileID: 7197226271207026478, guid: 59d5a720cb5ab46c7915210af704a8db, type: 3}
+  m_PrefabInstance: {fileID: 4384773695572551332}
+  m_PrefabAsset: {fileID: 0}
+--- !u!331 &7655826422551137304 stripped
+SpriteMask:
+  m_CorrespondingSourceObject: {fileID: 6262024249043708604, guid: 59d5a720cb5ab46c7915210af704a8db, type: 3}
   m_PrefabInstance: {fileID: 4384773695572551332}
   m_PrefabAsset: {fileID: 0}

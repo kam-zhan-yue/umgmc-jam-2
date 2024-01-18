@@ -45,6 +45,15 @@ TagManager:
   - name: Background
     uniqueID: 2674791413
     locked: 0
+  - name: Future Background
+    uniqueID: 2418211173
+    locked: 0
+  - name: Present Background
+    uniqueID: 384318079
+    locked: 0
+  - name: Past Background
+    uniqueID: 2208101843
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

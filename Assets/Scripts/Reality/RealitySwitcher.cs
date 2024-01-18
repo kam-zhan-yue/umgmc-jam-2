@@ -12,6 +12,9 @@ public class RealitySwitcher : MonoBehaviour
     [SerializeField] private SpriteMask presentMask;
     [SerializeField] private SpriteMask futureMask;
     [SerializeField] private SpriteMask pastMask;
+    [SerializeField] private SpriteMask presentBackgroundMask;
+    [SerializeField] private SpriteMask futureBackgroundMask;
+    [SerializeField] private SpriteMask pastBackgroundMask;
 
     [SerializeField] private Vector3 targetScale = new Vector3(20f, 20f, 20f);
     [SerializeField] private float scaleDuration = 0.5f;
@@ -101,28 +104,29 @@ public class RealitySwitcher : MonoBehaviour
         
         Debug.Log($"Transitioning to: {timeline}");
         _transitioning = true;
+        
+        futureMask.gameObject.SetActive(timeline == Timeline.Future);
+        futureBackgroundMask.gameObject.SetActive(timeline == Timeline.Future);
+        presentMask.gameObject.SetActive(timeline == Timeline.Present);
+        presentBackgroundMask.gameObject.SetActive(timeline == Timeline.Present);
+        pastMask.gameObject.SetActive(timeline == Timeline.Past);
+        pastBackgroundMask.gameObject.SetActive(timeline == Timeline.Past);
         switch (timeline)
         {
             case Timeline.Present:
-                futureMask.gameObject.SetActive(false);
-                presentMask.gameObject.SetActive(true);
-                pastMask.gameObject.SetActive(false);
                 realityManager.SetVisible(Timeline.Present);
                 TransitionTween(presentMask.transform);
+                TransitionTween(presentBackgroundMask.transform);
                 break;
             case Timeline.Future:
-                futureMask.gameObject.SetActive(true);
-                presentMask.gameObject.SetActive(false);
-                pastMask.gameObject.SetActive(false);
                 realityManager.SetVisible(Timeline.Future);
                 TransitionTween(futureMask.transform);
+                TransitionTween(futureBackgroundMask.transform);
                 break;
             case Timeline.Past:
-                futureMask.gameObject.SetActive(false);
-                presentMask.gameObject.SetActive(false);
-                pastMask.gameObject.SetActive(true);
                 realityManager.SetVisible(Timeline.Past);
                 TransitionTween(pastMask.transform);
+                TransitionTween(pastBackgroundMask.transform);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

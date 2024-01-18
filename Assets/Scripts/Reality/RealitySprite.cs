@@ -25,11 +25,13 @@ public class RealitySprite : RealityObject
 
     public override void ActivateCollider()
     {
-        _collider.enabled = true;
+        if(_collider)
+            _collider.enabled = true;
     }
 
     public override void DeactivateCollider()
     {
-        _collider.enabled = false;
+        if(_collider)
+            _collider.enabled = false;
     }
 }

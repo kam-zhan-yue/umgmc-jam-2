@@ -77,18 +77,35 @@ public class Reality : MonoBehaviour
                 tileList.Add(realityTiles[i]);
             }
         }
-        
-        int childCount = transform.childCount;
-        int totalObjects = childCount + tileList.Count;
-        _realityObjects = new RealityObject[totalObjects];
-        for (int i = 0; i < childCount; ++i)
-        {
-            _realityObjects[i] = transform.GetChild(i).GetComponent<RealitySprite>();
-        }
 
+        List<RealityObject> realityObjects = LoopThroughChildren(transform);
+
+        _realityObjects = new RealityObject[tileList.Count + realityObjects.Count];
         for (int i = 0; i < tileList.Count; ++i)
         {
-            _realityObjects[childCount + i] = tileList[i];
+            _realityObjects[i] = tileList[i];
         }
+
+        for (int i = 0; i < realityObjects.Count; ++i)
+        {
+            _realityObjects[tileList.Count + i] = realityObjects[i];
+        }
+    }
+
+    // Recursive function to loop through all children
+    private List<RealityObject> LoopThroughChildren(Transform parent)
+    {
+        List<RealityObject> realityObjects = new();
+        // Loop through each child of the current parent
+        foreach (Transform child in parent)
+        {
+            // Call the function recursively to loop through grandchildren, etc.
+            if (child.TryGetComponent(out RealityObject realityObject))
+            {
+                realityObjects.Add(realityObject);
+            }
+            realityObjects.AddRange(LoopThroughChildren(child));
+        }
+        return realityObjects;
     }
 }

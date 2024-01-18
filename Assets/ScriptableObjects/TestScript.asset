@@ -25,3 +25,11 @@ MonoBehaviour:
       customName: 
       message: Hiiii
       animationName: 
+  - actions:
+    - id: Spaceman
+      type: 0
+      actor: Spaceman
+      custom: 0
+      customName: 
+      message: Time to run.
+      animationName: 
