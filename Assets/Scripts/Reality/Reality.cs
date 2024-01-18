@@ -44,19 +44,11 @@ public class Reality : MonoBehaviour
         }
     }
 
-    public void SetVisibleInsideMask()
+    public void SetMaskInteraction(SpriteMaskInteraction maskInteraction)
     {
         for (int i = 0; i < _realityObjects.Length; ++i)
         {
-            _realityObjects[i].SetVisibleInsideMask();
-        }
-    }
-    
-    public void SetVisibleOutsideMask()
-    {
-        for (int i = 0; i < _realityObjects.Length; ++i)
-        {
-            _realityObjects[i].SetVisibleOutsideMask();
+            _realityObjects[i].SetMask(maskInteraction);
         }
     }
 

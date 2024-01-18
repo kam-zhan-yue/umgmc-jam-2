@@ -11,14 +11,9 @@ public class RealityTiles : RealityObject
     [NonSerialized, ShowInInspector, ReadOnly] private TilemapRenderer _tilemapRenderer;
     [NonSerialized, ShowInInspector, ReadOnly] private TilemapCollider2D _tilemapCollider2D;
 
-    public override void SetVisibleInsideMask()
+    public override void SetMask(SpriteMaskInteraction maskInteraction)
     {
-        _tilemapRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-    }
-
-    public override void SetVisibleOutsideMask()
-    {
-        _tilemapRenderer.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+        _tilemapRenderer.maskInteraction = maskInteraction;
     }
 
     public override void ActivateCollider()

@@ -29,9 +29,11 @@ public class RealitySwitcher : MonoBehaviour
     [SerializeField] private float realityInstabilityCooldown = 3f;
     private StopWatch realitySwitcherTimer;
     private StopWatch switchBackTimer;
+    
     private void Start()
     {
-        ServiceLocator.Instance.Get<IRealityManager>().InitReality(Timeline.Present);
+        ServiceLocator.Instance.Get<IRealityManager>().InitReality(timeline);
+        ActivateMasks(timeline);
         realitySwitcherTimer = new(realitySwitchCooldown);
         switchBackTimer = new(realityInstabilityCooldown);
     }
@@ -105,12 +107,7 @@ public class RealitySwitcher : MonoBehaviour
         Debug.Log($"Transitioning to: {timeline}");
         _transitioning = true;
         
-        futureMask.gameObject.SetActive(timeline == Timeline.Future);
-        futureBackgroundMask.gameObject.SetActive(timeline == Timeline.Future);
-        presentMask.gameObject.SetActive(timeline == Timeline.Present);
-        presentBackgroundMask.gameObject.SetActive(timeline == Timeline.Present);
-        pastMask.gameObject.SetActive(timeline == Timeline.Past);
-        pastBackgroundMask.gameObject.SetActive(timeline == Timeline.Past);
+        ActivateMasks(timeline);
         switch (timeline)
         {
             case Timeline.Present:
@@ -131,6 +128,16 @@ public class RealitySwitcher : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException();
         }
+    }
+
+    private void ActivateMasks(Timeline target)
+    {
+        futureMask.gameObject.SetActive(target == Timeline.Future);
+        futureBackgroundMask.gameObject.SetActive(target == Timeline.Future);
+        presentMask.gameObject.SetActive(target == Timeline.Present);
+        presentBackgroundMask.gameObject.SetActive(target == Timeline.Present);
+        pastMask.gameObject.SetActive(target == Timeline.Past);
+        pastBackgroundMask.gameObject.SetActive(target == Timeline.Past);
     }
 
     private void TransitionTween(Transform maskTransform)

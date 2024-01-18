@@ -63,19 +63,19 @@ public class RealityManager : MonoBehaviour, IRealityManager
         switch (timeline)
         {
             case Timeline.Present:
-                future.SetVisibleOutsideMask();
-                present.SetVisibleInsideMask();
-                past.SetVisibleInsideMask();
+                future.SetMaskInteraction(SpriteMaskInteraction.VisibleOutsideMask);
+                present.SetMaskInteraction(SpriteMaskInteraction.VisibleInsideMask);
+                past.SetMaskInteraction(SpriteMaskInteraction.VisibleOutsideMask);
                 break;
             case Timeline.Future:
-                future.SetVisibleInsideMask();
-                present.SetVisibleOutsideMask();
-                past.SetVisibleOutsideMask();
+                future.SetMaskInteraction(SpriteMaskInteraction.VisibleInsideMask);
+                present.SetMaskInteraction(SpriteMaskInteraction.VisibleOutsideMask);
+                past.SetMaskInteraction(SpriteMaskInteraction.VisibleOutsideMask);
                 break;
             case Timeline.Past:
-                future.SetVisibleOutsideMask();
-                present.SetVisibleOutsideMask();
-                past.SetVisibleInsideMask();
+                future.SetMaskInteraction(SpriteMaskInteraction.VisibleOutsideMask);
+                present.SetMaskInteraction(SpriteMaskInteraction.VisibleOutsideMask);
+                past.SetMaskInteraction(SpriteMaskInteraction.VisibleInsideMask);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

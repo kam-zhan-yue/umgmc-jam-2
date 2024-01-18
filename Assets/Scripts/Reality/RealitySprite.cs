@@ -12,15 +12,10 @@ public class RealitySprite : RealityObject
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _collider = GetComponent<Collider2D>();
     }
-
-    public override void SetVisibleInsideMask()
+    
+    public override void SetMask(SpriteMaskInteraction maskInteraction)
     {
-        _spriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-    }
-
-    public override void SetVisibleOutsideMask()
-    {
-        _spriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+        _spriteRenderer.maskInteraction = maskInteraction;
     }
 
     public override void ActivateCollider()
