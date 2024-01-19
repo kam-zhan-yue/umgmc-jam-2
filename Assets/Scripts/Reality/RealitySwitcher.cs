@@ -17,7 +17,7 @@ public class RealitySwitcher : MonoBehaviour
     [SerializeField] private SpriteMask pastBackgroundMask;
 
     [SerializeField] private Vector3 targetScale = new Vector3(20f, 20f, 20f);
-    [SerializeField] private float scaleDuration = 0.5f;
+    //[SerializeField] private float scaleDuration = 0.5f;
 
     //Private Variables
     private Timeline previousTimeline = Timeline.Present;
@@ -25,8 +25,8 @@ public class RealitySwitcher : MonoBehaviour
     private bool _transitioning = false;
 
 
-    [SerializeField] private float realitySwitchCooldown = 3f;
-    [SerializeField] private float realityInstabilityCooldown = 3f;
+    [SerializeField] private float realitySwitchCooldown = 1f;
+    [SerializeField] private float realityInstabilityCooldown = 1f;
     private StopWatch realitySwitcherTimer;
     private StopWatch switchBackTimer;
     
@@ -42,25 +42,8 @@ public class RealitySwitcher : MonoBehaviour
     {
         if(realitySwitcherTimer.UpdateTimer() && !realitySwitcherTimer.isChecked) // can swtich time
         {
-            bool alteredTime = false;
-            if (Input.GetKeyDown(KeyCode.Mouse0) && !_transitioning)
-            {
-                Transition(Timeline.Past);
-                alteredTime = true;
-                //Debug.Log("Timeline to the past");
-            }
-            //if (Input.GetKeyDown(KeyCode.Mouse2) && !_transitioning)
-            //{
-            //    //The reality will shift back automatically for the instability of time and space distortion 
-            //    //Transition(Timeline.Present);
-            //}
-            if (Input.GetKeyDown(KeyCode.Mouse1) && !_transitioning)
-            {
-                Transition(Timeline.Future);
-                alteredTime = true;
-                //Debug.Log("Timeline to the future");
-            }
-            if (alteredTime)
+
+            if (ChangeReality())
             {
                 switchBackTimer = new(realityInstabilityCooldown);
                 realitySwitcherTimer.isChecked = true;
@@ -79,6 +62,32 @@ public class RealitySwitcher : MonoBehaviour
             }
 
         }
+    }
+
+    private bool ChangeReality()
+    {
+        bool alteredTime = false;
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !_transitioning)
+        {
+            Transition(Timeline.Past);
+            alteredTime = true;
+            //Debug.Log("Timeline to the past");
+        }
+        #region - not in use -
+        //if (Input.GetKeyDown(KeyCode.Mouse2) && !_transitioning)
+        //{
+        //    //The reality will shift back automatically for the instability of time and space distortion 
+        //    //Transition(Timeline.Present);
+        //}
+        #endregion
+        if (Input.GetKeyDown(KeyCode.Mouse1) && !_transitioning)
+        {
+            Transition(Timeline.Future);
+            alteredTime = true;
+            //Debug.Log("Timeline to the future");
+        }
+
+        return alteredTime;
     }
 
     private void Transition(Timeline newTimeline)
@@ -143,7 +152,7 @@ public class RealitySwitcher : MonoBehaviour
     private void TransitionTween(Transform maskTransform)
     {
         maskTransform.localScale = Vector3.zero;
-        maskTransform.DOScale(targetScale, scaleDuration).OnComplete(EndTransition);
+        maskTransform.DOScale(targetScale, realitySwitchCooldown).OnComplete(EndTransition);
     }
 
     private void EndTransition()

@@ -18,12 +18,18 @@ public class RealityTiles : RealityObject
 
     public override void ActivateCollider()
     {
-        _tilemapCollider2D.enabled = true;
+        if (_tilemapCollider2D != null)
+        {
+            _tilemapCollider2D.enabled = true;
+        }
     }
 
     public override void DeactivateCollider()
     {
-        _tilemapCollider2D.enabled = false;
+        if (_tilemapCollider2D != null)
+        {
+            _tilemapCollider2D.enabled = false;
+        }
     }
 
     private void OnValidate()
