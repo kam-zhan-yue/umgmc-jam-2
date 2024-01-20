@@ -30,13 +30,7 @@ public class CharacterRecorder : MonoBehaviour
         bool idle = _character.MovementState.CurrentState == CharacterStates.MovementStates.Idle;
         ReplayData data = new PlayerReplayData(transform.position, alive, idle, _character.Grounded, _character.IsFacingRight,
             _characterHorizontalMovement.HorizontalSpeed, _characterHorizontalMovement.Walking,
-            _characterJump.Jumping, _characterJump.DoubleJumping, _characterJump.HitTheGround, _characterJump.NumberOfJumpsLeft,
             _characterRun.Running, _characterWallClinging.IsWallClinging, _characterWallJump.WallJumping);
         _recorder.RecordFrame(data);
-        if(!alive)
-        {
-            _recorder.StopRecording();
-        }
-
     }
 }

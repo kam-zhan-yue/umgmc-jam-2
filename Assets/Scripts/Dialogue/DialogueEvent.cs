@@ -24,6 +24,8 @@ public class DialogueEvent : MonoBehaviour
     [FoldoutGroup("Setup Variables")] [InlineEditor()]
     public DialogueScript script;
 
+    public UnityEvent onDialogueEnded;
+
     //Private Variables
     private readonly Dictionary<string, DialogueActor> _actorDictionary = new();
     private readonly Queue<DialogueGroup> _dialogueQueue = new();
@@ -52,7 +54,6 @@ public class DialogueEvent : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log($"Collided with: {other}");
         //If already played, then don't bother
         if (script.playOnce && _played)
             return;
@@ -197,6 +198,7 @@ public class DialogueEvent : MonoBehaviour
     {
         _played = true;
         _started = false;
+        onDialogueEnded?.Invoke();
         ServiceLocator.Instance.Get<IDialogueManager>().EndDialogue(this);
     }
 }

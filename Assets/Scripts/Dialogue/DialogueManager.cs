@@ -17,14 +17,12 @@ public class DialogueManager : MonoBehaviour, IDialogueManager
 
     public void StartDialogue(DialogueEvent dialogueEvent)
     {
-        Debug.Log($"Start Dialogue: {dialogueEvent}");
         dialogueEventStarted.Raise();
         LevelManager.Instance.FreezeCharacters();
     }
 
     public void EndDialogue(DialogueEvent dialogueEvent)
     {
-        Debug.Log($"End Dialogue: {dialogueEvent}");
         dialogueEventEnded.Raise();
         LevelManager.Instance.UnFreezeCharacters();
     }

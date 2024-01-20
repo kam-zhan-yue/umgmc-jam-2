@@ -113,7 +113,7 @@ public class RealitySwitcher : MonoBehaviour
             reality.ActivateColliders();
         }
         
-        Debug.Log($"Transitioning to: {timeline}");
+        // Debug.Log($"Transitioning to: {timeline}");
         _transitioning = true;
         
         ActivateMasks(timeline);

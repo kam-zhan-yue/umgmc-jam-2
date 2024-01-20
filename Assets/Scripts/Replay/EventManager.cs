@@ -7,44 +7,44 @@ using UnityEngine;
 
 public class EventManager : MonoBehaviour, IEventManager
 {
+    private Action _onDeath;
     private Action _onStartLevel;
     private Action _onGoalReached;
     private Action _onRestartLevel;
-
-    private Recorder recorder;
 
     private void Awake()
     {
         ServiceLocator.Instance.Register<IEventManager>(this);
     }
-
-    private void Start()
+    
+    /// <summary>
+    /// This is hooked to LevelManager OnSpawnAtCheckPoint
+    /// </summary>
+    public void OnPlayerSpawned()
     {
-        //LevelManager.Instance.Players[0].SubscribeToCharacterSpawn(OnPlayerSpawned);
-        //LevelManager.Instance.Players[0].onPlayerDeath.AddListener(OnPlayerDeath);
+        LevelManager.Instance.Players[0].onRespawn.AddListener(OnPlayerRespawn);
     }
 
+    /// <summary>
+    /// This is hooked to LevelManager OnPlayerDeath
+    /// </summary>
+    public void OnPlayerDeath()
+    {
+        Death();
+    }
 
-    private bool subbed = false;
+    public void TutorialOver()
+    {
+        StartLevel();
+    }
+
+    private void OnPlayerRespawn()
+    {
+        StartLevel();
+    }
+
     private void Update()
     {
-        //if(!subbed)
-        //{
-        //    LevelManager.Instance.onSpawnAtCheckPoint.AddListener(OnRespawn);
-        //    LevelManager.Instance.Players[0].onPlayerDeath.AddListener(OnPlayerDeath);
-        //    subbed = true;
-        //}
-
-        if(recorder == null)
-        {
-            recorder = LevelManager.Instance.Players[0].GetComponentInChildren<Recorder>();
-            LevelManager.Instance.onPlayerDeath.AddListener(OnPlayerDeath);
-            LevelManager.Instance.Players[0].onRespawn.AddListener(OnRespawn);
-            Debug.Log("Start recording");
-            recorder.StartRecording();
-        }
-
-
         if (Input.GetKeyDown(KeyCode.B))
         {
             StartLevel();
@@ -60,25 +60,10 @@ public class EventManager : MonoBehaviour, IEventManager
         }
     }
 
-    private void OnRespawn()
-    {
-        Debug.Log("OnRespawn");
-        recorder.StartReplay();
-    }
-
-    private void OnPlayerDeath()
-    {
-        //RestartLevel();
-        //recorder.ResetReplay();
-    }
-
     private void OnDestroy()
     {
-        //LevelManager.Instance.Players[0].onPlayerDeath.RemoveListener(OnPlayerDeath);
-        //LevelManager.Instance.Players[0].UnsubscribeFromCharacterSpawn(OnPlayerSpawned);
-        LevelManager.Instance.onPlayerDeath.RemoveListener(OnPlayerDeath);
-        LevelManager.Instance.Players[0].onRespawn.RemoveListener(OnRespawn);
-
+        LevelManager.Instance.Players[0].onRespawn.RemoveListener(OnPlayerRespawn);
+    
     }
 
 
@@ -88,6 +73,9 @@ public class EventManager : MonoBehaviour, IEventManager
     public void UnSubRestartLevel(Action action) => _onRestartLevel -= action;
     public void SubStartLevel(Action action) => _onStartLevel += action;
     public void UnSubStartLevel(Action action) => _onStartLevel -= action;
+    public void SubDeath(Action action) => _onDeath += action;
+    public void UnSubDeath(Action action) => _onDeath -= action;
+    public void Death() => _onDeath?.Invoke();
     public void GoalReached() => _onGoalReached?.Invoke();
     public void RestartLevel() => _onRestartLevel?.Invoke();
     public void StartLevel() => _onStartLevel?.Invoke();

@@ -7,6 +7,17 @@ public class Recording
     public ReplayObject replayObject { get; private set; }
     private Queue<ReplayData> _originalQueue;
     private Queue<ReplayData> _replayQueue;
+    public int Frames => _originalQueue.Count;
+
+    private RecordingState _recordingState = RecordingState.Idle;
+    public bool IsFinished => _recordingState == RecordingState.Finished;
+
+    private enum RecordingState
+    {
+        Idle = 0,
+        Playing = 1,
+        Finished = 2,
+    }
 
     public Recording(Queue<ReplayData> queue)
     {
@@ -14,16 +25,21 @@ public class Recording
         _replayQueue = new Queue<ReplayData>(queue);
     }
 
-    public void Restart()
+    public void Play()
     {
         _replayQueue = new Queue<ReplayData>(_originalQueue);
+        _recordingState = RecordingState.Playing;
     }
 
     public bool PlayNextFrame()
     {
+        //If not playing, then don't play.
+        if (_recordingState != RecordingState.Playing)
+            return false;
+        
         if (replayObject == null)
         {
-            Debug.LogError("Tried to play next frame, but replay object is null");
+            // Debug.LogError("Tried to play next frame, but replay object is null");
             return false;
         }
 
@@ -36,8 +52,9 @@ public class Recording
         return false;
     }
 
-    public void InstantiateReplayObject(GameObject prefab)
+    public void TryInstantiateReplayObject(GameObject prefab)
     {
+        //Only instantiate if there is no replay object and there is data to replay
         if (_replayQueue.Count > 0)
         {
             ReplayData startingData = _replayQueue.Peek();
@@ -51,7 +68,14 @@ public class Recording
 
     public void DestroyReplayObject()
     {
-        if(replayObject)
-            Object.Destroy(replayObject);
+        if (replayObject)
+        {
+            Object.Destroy(replayObject.gameObject);
+        }
+    }
+
+    public void Stop()
+    {
+        _recordingState = RecordingState.Finished;
     }
 }

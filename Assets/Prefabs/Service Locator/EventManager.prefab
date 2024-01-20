@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2888807564607958817}
   - component: {fileID: 6309903160529653962}
+  - component: {fileID: 5149797315769404943}
   m_Layer: 0
   m_Name: EventManager
   m_TagString: Untagged
@@ -44,3 +45,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3e801933ef64013ac2c8f617ff5887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5149797315769404943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6192921273512598049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb56b5dd7d9534696bed4dacad93f1b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: 
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6309903160529653962}
+        m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
+        m_MethodName: TutorialOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  gameEvent: {fileID: 11400000, guid: b707f269448d14fbb86e1561856d5f39, type: 2}
