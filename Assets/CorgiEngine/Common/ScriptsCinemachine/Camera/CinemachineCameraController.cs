@@ -351,6 +351,12 @@ namespace MoreMountains.CorgiEngine
 		/// <param name="corgiEngineEvent"></param>
 		public virtual void OnMMEvent(CorgiEngineEvent corgiEngineEvent)
 		{
+			// if (corgiEngineEvent.EventType == CorgiEngineEventTypes.LevelStart)
+			// {
+			// 	SetTarget(LevelManager.Instance.Players[0]);
+			// 	StartFollowing();
+			// }
+			
 			if (corgiEngineEvent.EventType == CorgiEngineEventTypes.Respawn)
 			{
 				if (InstantRepositionCameraOnRespawn)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Common;
 using DG.Tweening;
+using MoreMountains.Feedbacks;
 using Unity.Collections;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class RealitySwitcher : MonoBehaviour
     [SerializeField] private SpriteMask presentBackgroundMask;
     [SerializeField] private SpriteMask futureBackgroundMask;
     [SerializeField] private SpriteMask pastBackgroundMask;
+    [SerializeField] private MMFeedbacks switchFeedback;
 
     [SerializeField] private Vector3 targetScale = new Vector3(20f, 20f, 20f);
     //[SerializeField] private float scaleDuration = 0.5f;
@@ -97,6 +99,8 @@ public class RealitySwitcher : MonoBehaviour
             return;
         }
 
+        switchFeedback.PlayFeedbacks();
+        
         previousTimeline = timeline;
         timeline = newTimeline;
 
