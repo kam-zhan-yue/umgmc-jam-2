@@ -11,8 +11,8 @@ namespace MoreMountains.CorgiEngine
 	/// </summary>
 	[RequireComponent(typeof(BoxCollider2D))]
 	[AddComponentMenu("Corgi Engine/Spawn/Checkpoint")]
-	public class CheckPoint : CorgiMonoBehaviour 
-	{
+	public class CheckPoint : CorgiMonoBehaviour
+    {
 		[Header("Spawn")]
 		[MMInformation("Add this script to a (preferrably empty) GameObject and it'll be added to the level's checkpoint list, allowing you to respawn from there. If you bind it to the LevelManager's starting point, that's where your character will spawn at the start of the level. And here you can decide whether the character should spawn facing left or right.",MMInformationAttribute.InformationType.Info,false)]
 
@@ -42,12 +42,16 @@ namespace MoreMountains.CorgiEngine
 		{
 			_listeners = new List<Respawnable>();
 		}
-				
-		/// <summary>
-		/// Spawns the player at the checkpoint.
-		/// </summary>
-		/// <param name="player">Player.</param>
-		public virtual void SpawnPlayer(Character player)
+		protected virtual void Start()
+		{
+
+		}
+
+        /// <summary>
+        /// Spawns the player at the checkpoint.
+        /// </summary>
+        /// <param name="player">Player.</param>
+        public virtual void SpawnPlayer(Character player)
 		{
 
 			player.RespawnAt(transform, FacingDirection);

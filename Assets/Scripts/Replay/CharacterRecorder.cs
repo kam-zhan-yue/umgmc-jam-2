@@ -33,5 +33,10 @@ public class CharacterRecorder : MonoBehaviour
             _characterJump.Jumping, _characterJump.DoubleJumping, _characterJump.HitTheGround, _characterJump.NumberOfJumpsLeft,
             _characterRun.Running, _characterWallClinging.IsWallClinging, _characterWallJump.WallJumping);
         _recorder.RecordFrame(data);
+        if(!alive)
+        {
+            _recorder.StopRecording();
+        }
+
     }
 }

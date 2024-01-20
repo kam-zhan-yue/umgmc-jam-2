@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e2b0c68419ab34045800099c28633509, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -146,6 +146,6 @@ MonoBehaviour:
   AutoTriggerSetup: 1
   ApplicationMode: 1
   ForceMode: 0
-  AddedForce: {x: -100, y: 0}
+  AddedForce: {x: -200, y: 0}
   ForceApplicationCooldownDuration: {x: 0, y: 0.25}
   ResetForces: 1

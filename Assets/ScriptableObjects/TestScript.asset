@@ -16,7 +16,6 @@ MonoBehaviour:
   playOnce: 1
   actors:
   - Whispering
-  - WhisperingSpell2
   - Priest
   groups:
   - actions:

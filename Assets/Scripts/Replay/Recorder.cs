@@ -1,13 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Common;
 using UnityEngine;
 
 public class Recorder : MonoBehaviour
 {
     [SerializeField] private GameObject replayObjectPrefab;
-    private Recording _recording;
+    private List<Recording> _recordings;
     public Queue<ReplayData> recordingQueue { get; private set; } = new();
+    private float frames = 0;
+
+    public List<Tuple<float,Queue<ReplayData>>> AllRecordings { get; private set; } = new();
 
     private RecordState _recordState;
 
@@ -41,10 +46,86 @@ public class Recorder : MonoBehaviour
         RestartReplay();
     }
 
-    private void StartRecording()
+
+    
+    public void StopRecording()
+    {
+        _recordState = RecordState.Idle;
+        Debug.Log("Data Added");
+        AllRecordings.Add(new Tuple<float, Queue<ReplayData>>(frames, recordingQueue));
+        frames = 0;
+    }
+
+
+
+    public void StartRecording()
     {
         _recordState = RecordState.Recording;
     }
+
+    
+
+    public void RecordFrame(ReplayData data)
+    {
+        if (_recordState == RecordState.Recording)
+        {
+            recordingQueue.Enqueue(data);
+            frames++;
+            //Debug.Log($"Data: {data}");
+        }
+    }
+
+    public int topN = 3;
+
+    public void StartReplay()
+    {
+        //Don't start the replay unless there is data.
+        if (AllRecordings.Count <= 0)
+        {
+            Debug.Log("nothign happened");
+            return;
+        }
+        _recordState = RecordState.Replaying;
+        //Initialise recording
+        _recordings = new();
+        AllRecordings.Sort((tuple1, tuple2) => tuple1.Item1.CompareTo(tuple2.Item1));
+
+        Debug.Log("StartReplay");
+        Debug.Log(AllRecordings.Count);
+
+        for (int i = 0; i < topN && i < AllRecordings.Count; i++)
+        {
+            var o = AllRecordings[i];
+            _recordings.Add(new Recording(o.Item2));
+            _recordings[i].InstantiateReplayObject(replayObjectPrefab);
+        }
+
+        recordingQueue.Clear();
+    }
+
+    public void RestartReplay()
+    {
+        _recordState = RecordState.Replaying;
+        foreach (var o in _recordings)
+        {
+            o.Restart();
+        }
+    }
+
+    //this is not in use
+    public void ResetReplay()
+    {
+
+        Debug.Log("Who called me");
+        _recordState = RecordState.Idle;
+        foreach (var o in _recordings)
+        {
+            o.DestroyReplayObject();
+        }
+        _recordings = null;
+    }
+    
+
 
     private void Update()
     {
@@ -56,55 +137,21 @@ public class Recorder : MonoBehaviour
                 break;
             case RecordState.Replaying:
 
-                bool hasNextFrame = _recording.PlayNextFrame();
-        
-                //Check if we are finished, so that we can restart
-                if (!hasNextFrame)
+                foreach (var o in _recordings)
                 {
-                    RestartReplay();
+                    bool hasNextFrame = o.PlayNextFrame();
+                    //Check if we are finished, so that we can restart
+                    if (!hasNextFrame)
+                    {
+                        o.DestroyReplayObject();
+                    }
                 }
                 break;
         }
     }
 
-    public void RecordFrame(ReplayData data)
-    {
-        if (_recordState == RecordState.Recording)
-        {
-            recordingQueue.Enqueue(data);
-            Debug.Log($"Data: {data}");
-        }
-    }
 
-    private void StartReplay()
-    {
-        //Don't start the replay unless there is data.
-        if (recordingQueue.Count == 0)
-        {
-            return;
-        }
-        _recordState = RecordState.Replaying;
-        //Initialise recording
-        _recording = new Recording(recordingQueue);
-        //Reset the current recording queue for next record
-        recordingQueue.Clear();
-        //Instantiate recording object
-        _recording.InstantiateReplayObject(replayObjectPrefab);
-    }
 
-    private void RestartReplay()
-    {
-        _recordState = RecordState.Replaying;
-        _recording.Restart();
-    }
-
-    private void ResetReplay()
-    {
-        _recordState = RecordState.Idle;
-        _recording.DestroyReplayObject();
-        _recording = null;
-    }
-    
     private void OnDestroy()
     {
         IEventManager eventManager = ServiceLocator.Instance.Get<IEventManager>();

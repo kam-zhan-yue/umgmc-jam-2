@@ -3,6 +3,7 @@ using System.Collections;
 using MoreMountains.Tools;
 using System.Collections.Generic;
 using System;
+using UnityEngine.Events;
 
 namespace MoreMountains.CorgiEngine
 {	
@@ -759,7 +760,9 @@ namespace MoreMountains.CorgiEngine
 
 
 		public Vector3 spawnOffset = new Vector3(0, 1f,0);
-		
+		public UnityEvent onRespawn = new();
+
+
 		/// <summary>
 		/// Makes the player respawn at the location passed in parameters
 		/// </summary>
@@ -805,12 +808,26 @@ namespace MoreMountains.CorgiEngine
 				CharacterHealth.ResetHealthToMaxHealth();
 				CharacterHealth.Revive ();
 			}
+
+			onRespawn.Invoke();
 		}
-		
-		/// <summary>
-		/// Flips the character and its dependencies (jetpack for example) horizontally
-		/// </summary>
-		public virtual void Flip(bool IgnoreFlipOnDirectionChange = false)
+
+        public void SubscribeToCharacterSpawn(UnityAction listener)
+        {
+            onRespawn.AddListener(listener);
+        }
+
+        public void UnsubscribeFromCharacterSpawn(UnityAction listener)
+        {
+            onRespawn.RemoveListener(listener);
+        }
+
+
+
+        /// <summary>
+        /// Flips the character and its dependencies (jetpack for example) horizontally
+        /// </summary>
+        public virtual void Flip(bool IgnoreFlipOnDirectionChange = false)
 		{
 			// if we don't want the character to flip, we do nothing and exit
 			if (!FlipModelOnDirectionChange && !RotateModelOnDirectionChange && !IgnoreFlipOnDirectionChange)
@@ -1041,6 +1058,7 @@ namespace MoreMountains.CorgiEngine
 			}
 		}
 
+
 		/// <summary>
 		/// On character death, disables the brain and any damage on touch area 
 		/// </summary>
@@ -1055,7 +1073,8 @@ namespace MoreMountains.CorgiEngine
 			{
 				_damageOnTouch.enabled = false;
 			}
-		}
+
+        }
 
 		/// <summary>
 		/// OnEnable, we register our OnRevive event

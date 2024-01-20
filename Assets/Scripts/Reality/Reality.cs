@@ -30,7 +30,7 @@ public class Reality : MonoBehaviour
     {
         for (int i = 0; i < _realityObjects.Length; ++i)
         {
-            Debug.Log($"Activating Collider: {_realityObjects[i].name}");
+            //Debug.Log($"Activating Collider: {_realityObjects[i].name}");
             _realityObjects[i].ActivateCollider();
         }
     }
@@ -39,7 +39,7 @@ public class Reality : MonoBehaviour
     {
         for (int i = 0; i < _realityObjects.Length; ++i)
         {
-            Debug.Log($"Deactivating Collider: {_realityObjects[i].name}");
+            //Debug.Log($"Deactivating Collider: {_realityObjects[i].name}");
             _realityObjects[i].DeactivateCollider();
         }
     }

@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using MoreMountains.Tools;
 using UnityEngine.Serialization;
+using UnityEngine.Events;
 
 namespace MoreMountains.CorgiEngine
 {
@@ -450,15 +451,17 @@ namespace MoreMountains.CorgiEngine
 			{
 				Players[0].RespawnAt(PointsOfEntry[point.PointOfEntryIndex].Position, point.FacingDirection);
 				PointsOfEntry[point.PointOfEntryIndex].EntryFeedback?.PlayFeedbacks();
-				return;
 			}
 
 			if (CurrentCheckPoint != null)
 			{
-				CurrentCheckPoint.SpawnPlayer(Players[0]);
-				return;
+                CurrentCheckPoint.SpawnPlayer(Players[0]);
 			}
-		}
+
+            onSpawnAtCheckPoint.Invoke();
+        }
+
+        public UnityEvent onSpawnAtCheckPoint = new();
 
 		/// <summary>
 		/// Spawns multiple playable characters into the scene
@@ -857,18 +860,22 @@ namespace MoreMountains.CorgiEngine
 			BoundsCollider = this.gameObject.GetComponent<Collider>();
 			BoundsCollider2D = this.gameObject.GetComponent<CompositeCollider2D>();
 		}
-		
-		/// <summary>
-		/// Catches CorgiEngineEvents and acts on them, playing the corresponding sounds
-		/// </summary>
-		/// <param name="engineEvent">CorgiEngineEvent event.</param>
-		public virtual void OnMMEvent(CorgiEngineEvent engineEvent)
+
+        public UnityEvent onPlayerDeath = new();
+
+
+        /// <summary>
+        /// Catches CorgiEngineEvents and acts on them, playing the corresponding sounds
+        /// </summary>
+        /// <param name="engineEvent">CorgiEngineEvent event.</param>
+        public virtual void OnMMEvent(CorgiEngineEvent engineEvent)
 		{
 			switch (engineEvent.EventType)
 			{
 				case CorgiEngineEventTypes.PlayerDeath:
 					PlayerDead(engineEvent.OriginCharacter);
-					break;
+                    onPlayerDeath.Invoke();
+                    break;
 			}
 		}
 

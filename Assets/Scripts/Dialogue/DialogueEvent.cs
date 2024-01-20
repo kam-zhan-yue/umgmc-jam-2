@@ -74,8 +74,10 @@ public class DialogueEvent : MonoBehaviour
             return;
         _started = true;
         _dialogueQueue.Clear();
-        for (int i = 0; i < script.groups.Count; ++i)
-            _dialogueQueue.Enqueue(script.groups[i]);
+        foreach(var o in script.groups)
+        {
+            _dialogueQueue.Enqueue(o);
+        }
         DequeueDialogue();
         ServiceLocator.Instance.Get<IDialogueManager>().StartDialogue(this);
     }
@@ -88,8 +90,10 @@ public class DialogueEvent : MonoBehaviour
             _totalEvents = 0;
             _currentGroup = _dialogueQueue.Dequeue();
             List<DialogueAction> actions = _currentGroup.actions;
-            for (int i = 0; i < actions.Count; ++i)
-                PlayAction(actions[i]);
+            foreach (var o in actions)
+            {
+                PlayAction(o);
+            }
         }
         else
         {
