@@ -30,8 +30,10 @@ MonoBehaviour:
       actor: Whispering
       custom: 0
       customName: 
-      message: The chains of time have been shattered, and the world teeters on the
-        brink of oblivion.
+      message: 'The chains of time have been shattered,
+
+        and the world teeters
+        on the brink of oblivion.'
       animationName: 
   - actions:
     - id: Whispering
@@ -39,8 +41,8 @@ MonoBehaviour:
       actor: Whispering
       custom: 0
       customName: 
-      message: Seek the Basilica of Eternity. Only there will you find the key to
-        mend the fractured timeline and save the world from impending doom.
+      message: "Seek the Basilica of Eternity.\nOnly there will you find the key
+        to mend the \nfractured timeline and save the world from \nimpending doom."
       animationName: 
   - actions:
     - id: Whispering
@@ -48,6 +50,8 @@ MonoBehaviour:
       actor: Whispering
       custom: 0
       customName: 
-      message: Use the [Left Mouse Button] to travel backward in time, and the [Right
-        Mouse Button] to travel forward in time.
+      message: 'Use the [Left Mouse Button] to travel backward in time,
+
+        and
+        the [Right Mouse Button] to travel forward in time.'
       animationName: 
