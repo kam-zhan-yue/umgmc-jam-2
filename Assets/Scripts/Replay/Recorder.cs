@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Recorder : MonoBehaviour
 {
-    [SerializeField] private int topN = 3;
+    // [SerializeField] private int topN = -1;
     [SerializeField] private GameObject replayObjectPrefab;
     private List<Recording> _recordings = new();
     private Queue<ReplayData> RecordingQueue { get; set; } = new();
@@ -36,14 +36,14 @@ public class Recorder : MonoBehaviour
     {
         Debug.Log($"OnStartLevel Recordings: {_recordings.Count}");
         //Start Recording the current player run
-        StartRecording();
         
         //Also restart all existing recordings
         for (int i = 0; i < _recordings.Count; ++i)
         {
-            _recordings[i].TryInstantiateReplayObject(replayObjectPrefab);
             _recordings[i].Play();
+            _recordings[i].TryInstantiateReplayObject(replayObjectPrefab);
         }
+        StartRecording();
     }
 
     private void OnGoalReached()
@@ -64,29 +64,33 @@ public class Recorder : MonoBehaviour
     // Method to add a new Recording instance to the list
     public void AddRecording(Queue<ReplayData> replayData)
     {
-        // If the list is not at maximum size, simply add the newRecording
-        if (_recordings.Count < topN)
-        {
-            Recording recording = new Recording(replayData);
-            _recordings.Add(recording);
-            Debug.Log($"Adding Recording {recording}");
-        }
-        else
-        {
-            // Find the index of the recording with the highest frame
-            int maxFrameIndex = _recordings.FindIndex(r => r.Frames == _recordings.Max(rec => rec.Frames));
-
-            int frames = replayData.Count;
-            // If the newRecording has lower frames, replace the max frame recording and sort the list
-            if (frames < _recordings[maxFrameIndex].Frames)
-            {
-                Recording recording = new Recording(replayData);
-                _recordings[maxFrameIndex] = recording;
-                _recordings.Sort((a, b) => a.Frames.CompareTo(b.Frames));
-                Debug.Log($"Adding Recording {recording}");
-            }
-            // If the newRecording has higher or equal frames, do not add it
-        }
+        Recording recording = new Recording(replayData);
+        _recordings.Add(recording);
+        
+        //ONLY IMPLEMENT IF WE ARE SAVING REPLAYS ON GOAL REACHED
+        // // If the list is not at maximum size, simply add the newRecording
+        // if (_recordings.Count < topN)
+        // {
+        //     Recording recording = new Recording(replayData);
+        //     _recordings.Add(recording);
+        //     Debug.Log($"Adding Recording {recording}");
+        // }
+        // else
+        // {
+        //     // Find the index of the recording with the highest frame
+        //     int maxFrameIndex = _recordings.FindIndex(r => r.Frames == _recordings.Max(rec => rec.Frames));
+        //
+        //     int frames = replayData.Count;
+        //     // If the newRecording has lower frames, replace the max frame recording and sort the list
+        //     if (frames < _recordings[maxFrameIndex].Frames)
+        //     {
+        //         Recording recording = new Recording(replayData);
+        //         _recordings[maxFrameIndex] = recording;
+        //         _recordings.Sort((a, b) => a.Frames.CompareTo(b.Frames));
+        //         Debug.Log($"Adding Recording {recording}");
+        //     }
+        //     // If the newRecording has higher or equal frames, do not add it
+        // }
     }
 
     private void StopRecording()
@@ -95,6 +99,11 @@ public class Recorder : MonoBehaviour
         _recordState = RecordState.Idle;
         AddRecording(RecordingQueue);
         RecordingQueue.Clear();
+        for (int i = 0; i < _recordings.Count; ++i)
+        {
+            _recordings[i].Stop();
+            _recordings[i].DestroyReplayObject();
+        }
     }
 
     private void StartRecording()
@@ -136,15 +145,6 @@ public class Recorder : MonoBehaviour
     //     RecordingQueue.Clear();
     // }
 
-    private void RestartReplay()
-    {
-        // _recordState = RecordState.Replaying;
-        foreach (var o in _recordings)
-        {
-            o.Play();
-        }
-    }
-
     //this is not in use
     public void ResetReplay()
     {
@@ -169,15 +169,15 @@ public class Recorder : MonoBehaviour
                 for (int i = 0; i < _recordings.Count; ++i)
                 {
                     Recording recording = _recordings[i];
-                    Debug.Log($"Playing Recording: {i}");
                     if (!recording.IsFinished)
                     {
-                        Debug.Log($"Playing Recording: {i}");
+                        // Debug.Log($"Playing Recording: {i}");
                         bool hasNextFrame = recording.PlayNextFrame();
                         if (!hasNextFrame)
                         {
-                            recording.DestroyReplayObject();
                             recording.Stop();
+                            recording.DestroyReplayObject();
+                            // Debug.Log($"Stopping: {i}");
                         }
                     }
                 }

@@ -29,17 +29,21 @@ public class Recording
     {
         _replayQueue = new Queue<ReplayData>(_originalQueue);
         _recordingState = RecordingState.Playing;
+        Debug.Log("Play Recording");
     }
 
     public bool PlayNextFrame()
     {
         //If not playing, then don't play.
         if (_recordingState != RecordingState.Playing)
+        {
+            Debug.Log("Stop due to record state");
             return false;
+        }
         
         if (replayObject == null)
         {
-            // Debug.LogError("Tried to play next frame, but replay object is null");
+            Debug.LogError("Tried to play next frame, but replay object is null");
             return false;
         }
 
@@ -76,6 +80,7 @@ public class Recording
 
     public void Stop()
     {
+        Debug.Log("Stop Recording");
         _recordingState = RecordingState.Finished;
     }
 }
