@@ -12,32 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc676c80362ea4d00aa23fecdb4dcbe0, type: 3}
   m_Name: TestScript
   m_EditorClassIdentifier: 
-  useCamera: 1
-  playOnce: 0
+  useCamera: 0
+  playOnce: 1
   actors:
-  - Spaceman
+  - Whispering
+  - WhisperingSpell2
+  - Priest
   groups:
   - actions:
-    - id: Spaceman
+    - id: Whispering
       type: 0
-      actor: Spaceman
-      custom: 1
-      customName: ?????
-      message: Hiiii
-      animationName: 
-  - actions:
-    - id: Spaceman
-      type: 0
-      actor: Spaceman
+      actor: Whispering
       custom: 0
       customName: 
-      message: Time to run.
-      animationName: 
-  - actions:
-    - id: Spaceman
-      type: 0
-      actor: Spaceman
-      custom: 0
-      customName: 
-      message: Die
+      message: 'You are awake Bro
+
+'
       animationName: 

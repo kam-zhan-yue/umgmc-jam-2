@@ -49,6 +49,7 @@ namespace MoreMountains.CorgiEngine
 		/// <param name="player">Player.</param>
 		public virtual void SpawnPlayer(Character player)
 		{
+
 			player.RespawnAt(transform, FacingDirection);
 			
 			foreach(Respawnable listener in _listeners)

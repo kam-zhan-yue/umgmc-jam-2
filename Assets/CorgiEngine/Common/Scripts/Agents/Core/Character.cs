@@ -756,6 +756,9 @@ namespace MoreMountains.CorgiEngine
 			_controller.enabled = false;
 			this.gameObject.MMGetComponentNoAlloc<Collider2D>().enabled = false;		
 		}
+
+
+		public Vector3 spawnOffset = new Vector3(0, 1f,0);
 		
 		/// <summary>
 		/// Makes the player respawn at the location passed in parameters
@@ -782,7 +785,7 @@ namespace MoreMountains.CorgiEngine
 			_controller.CollisionsOn();
 			
 			
-			transform.position = spawnPoint.position;
+			transform.position = spawnPoint.position + spawnOffset;
 			Physics2D.SyncTransforms();
 			
 			if (CharacterHealth != null)
