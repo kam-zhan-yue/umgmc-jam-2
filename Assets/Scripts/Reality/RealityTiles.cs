@@ -11,6 +11,12 @@ public class RealityTiles : RealityObject
     [NonSerialized, ShowInInspector, ReadOnly] private TilemapRenderer _tilemapRenderer;
     [NonSerialized, ShowInInspector, ReadOnly] private TilemapCollider2D _tilemapCollider2D;
 
+    private void Awake()
+    {
+        _tilemapRenderer = GetComponent<TilemapRenderer>();
+        _tilemapCollider2D = GetComponent<TilemapCollider2D>();
+    }
+    
     public override void SetMask(SpriteMaskInteraction maskInteraction)
     {
         _tilemapRenderer.maskInteraction = maskInteraction;
@@ -30,11 +36,5 @@ public class RealityTiles : RealityObject
         {
             _tilemapCollider2D.enabled = false;
         }
-    }
-
-    private void OnValidate()
-    {
-        _tilemapRenderer = GetComponent<TilemapRenderer>();
-        _tilemapCollider2D = GetComponent<TilemapCollider2D>();
     }
 }

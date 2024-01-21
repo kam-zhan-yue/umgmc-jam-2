@@ -18,7 +18,10 @@ public class RealityManager : MonoBehaviour, IRealityManager
 
     public void InitReality(Timeline timeline)
     {
+        Debug.Log($"InitReality");
         SetVisible(timeline);
+        Debug.Log($"Realities: {_realities}");
+        Debug.Log($"RealityCount : {_realities.Length}");
         for (int i = 0; i < _realities.Length; ++i)
         {
             if (_realities[i].timeline != timeline)
@@ -61,6 +64,7 @@ public class RealityManager : MonoBehaviour, IRealityManager
         Reality future = GetReality(Timeline.Future);
         Reality present = GetReality(Timeline.Present);
         Reality past = GetReality(Timeline.Past);
+        Debug.Log($"Future: {future} Present: {present} Past: {past}");
         switch (timeline)
         {
             case Timeline.Present:

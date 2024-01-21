@@ -6,13 +6,20 @@ using UnityEngine;
 
 public class RealityNpc : RealityObject
 {
-    [NonSerialized, ShowInInspector, ReadOnly] private SpriteRenderer[] _spriteRenderers;
+    [NonSerialized, ShowInInspector, ReadOnly] private SpriteRenderer[] _spriteRenderers = Array.Empty<SpriteRenderer>();
     [NonSerialized, ShowInInspector, ReadOnly] private BoxCollider2D _collider;
+
+    private void Awake()
+    {
+        _spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        _collider = GetComponent<BoxCollider2D>();
+    }
 
     public override void SetMask(SpriteMaskInteraction maskInteraction)
     {
         for (int i = 0; i < _spriteRenderers.Length; ++i)
         {
+
             _spriteRenderers[i].maskInteraction = maskInteraction;
         }
     }
@@ -27,11 +34,5 @@ public class RealityNpc : RealityObject
     {
         if(_collider)
             _collider.enabled = false;
-    }
-
-    private void OnValidate()
-    {
-        _spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-        _collider = GetComponent<BoxCollider2D>();
     }
 }
