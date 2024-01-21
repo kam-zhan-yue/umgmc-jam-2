@@ -5,6 +5,7 @@ using Common;
 using DG.Tweening;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RealitySwitcher : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class RealitySwitcher : MonoBehaviour
 
     //Private Variables
     private Timeline previousTimeline = Timeline.Present;
-    private Timeline timeline = Timeline.Present;
+    private Timeline timeline = Timeline.Present; public Timeline Timeline { get { return timeline; } }
     private bool _transitioning = false;
 
 
@@ -64,6 +65,8 @@ public class RealitySwitcher : MonoBehaviour
         }
     }
 
+    public UnityEvent onRealityChanged;
+
     private bool ChangeReality()
     {
         bool alteredTime = false;
@@ -86,7 +89,7 @@ public class RealitySwitcher : MonoBehaviour
             alteredTime = true;
             //Debug.Log("Timeline to the future");
         }
-
+        if (alteredTime) onRealityChanged.Invoke();
         return alteredTime;
     }
 
