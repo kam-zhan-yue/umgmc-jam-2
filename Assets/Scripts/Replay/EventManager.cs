@@ -60,10 +60,9 @@ public class EventManager : MonoBehaviour, IEventManager
         }
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         LevelManager.Instance.Players[0].onRespawn.RemoveListener(OnPlayerRespawn);
-    
     }
 
 
