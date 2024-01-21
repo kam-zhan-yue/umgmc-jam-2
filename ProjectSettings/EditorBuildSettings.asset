@@ -225,6 +225,9 @@ EditorBuildSettings:
     path: Assets/CorgiEngine/ThirdParty/MoreMountains/MMTools/Tools/MMSceneLoading/LoadingScreens/MMAdditiveLoadingScreenSimple.unity
     guid: 945e5b97212e8e74ebcd35bddde3970c
   - enabled: 1
+    path: Assets/Scenes/StartGame.unity
+    guid: de874706052234cb4b6dca4d7b83a16a
+  - enabled: 1
     path: Assets/Scenes/TimeRunner.unity
     guid: bd31e307810c74da28b5b0aa72347750
   m_configObjects: {}
