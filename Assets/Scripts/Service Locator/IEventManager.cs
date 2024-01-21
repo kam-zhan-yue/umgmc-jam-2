@@ -13,4 +13,6 @@ public interface IEventManager : IGameService
     public void SubRealitySwitch(Action<float> action);
     public void UnSubRealitySwitch(Action<float> action);
     public void RealitySwitch(float duration);
+    public void SubCheckpoint(Action action);
+    public void UnSubCheckpoint(Action action);
 }

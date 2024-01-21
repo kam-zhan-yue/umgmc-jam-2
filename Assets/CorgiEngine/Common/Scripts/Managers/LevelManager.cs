@@ -170,6 +170,8 @@ namespace MoreMountains.CorgiEngine
 		protected BoxCollider _collider;
 		protected BoxCollider2D _collider2D;
 		protected Bounds _originalBounds;
+
+		public Action onCheckpointSaved;
 		
 		/// <summary>
 		/// Statics initialization to support enter play modes
@@ -517,10 +519,20 @@ namespace MoreMountains.CorgiEngine
 				CurrentCheckPoint = newCheckPoint;
 				return;
 			}
+			
+			Debug.Log($"Current Order: {CurrentCheckPoint.CheckPointOrder} New Order: {newCheckPoint.CheckPointOrder}");
+			if (newCheckPoint.CheckPointOrder > CurrentCheckPoint.CheckPointOrder)
+			{
+				Debug.Log("Checkpoint Saved");
+				onCheckpointSaved?.Invoke();
+			}
+			
+			//A new checkpoint has been reached
 			if (newCheckPoint.CheckPointOrder >= CurrentCheckPoint.CheckPointOrder)
 			{
 				CurrentCheckPoint = newCheckPoint;
 			}
+
 		}
 
 		/// <summary>

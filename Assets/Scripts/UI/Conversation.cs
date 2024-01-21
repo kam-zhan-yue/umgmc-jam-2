@@ -10,6 +10,7 @@ public class Conversation : MonoBehaviour
     [SerializeField] private UnityEvent onConversationStart; 
     [SerializeField] private List<string> dialogue = new();
     [SerializeField] private GameObject conversationUI;
+    [SerializeField] private UnityEvent onConversationEnd; 
 
 
     private TextMeshProUGUI textBox;
@@ -62,6 +63,7 @@ public class Conversation : MonoBehaviour
         }
         else
         {
+            onConversationEnd?.Invoke();
             GameManager.Instance.Reset();
         }
     }

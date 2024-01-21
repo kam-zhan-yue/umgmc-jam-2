@@ -13,6 +13,7 @@ public class EventManager : MonoBehaviour, IEventManager
     private Action _onGoalReached;
     private Action _onRestartLevel;
     private Action<float> _onRealitySwitch;
+    private Action _onCheckpoint;
     private int _deathCount = 0;
 
     private void Awake()
@@ -26,7 +27,10 @@ public class EventManager : MonoBehaviour, IEventManager
     public void OnPlayerSpawned()
     {
         LevelManager.Instance.Players[0].onRespawn.AddListener(OnPlayerRespawn);
+        LevelManager.Instance.onCheckpointSaved += CheckpointSaved;
     }
+
+    private void CheckpointSaved() => _onCheckpoint?.Invoke();
 
     /// <summary>
     /// This is hooked to LevelManager OnPlayerDeath
@@ -66,7 +70,11 @@ public class EventManager : MonoBehaviour, IEventManager
 
     private void OnDisable()
     {
-        LevelManager.Instance.Players[0].onRespawn.RemoveListener(OnPlayerRespawn);
+        if (LevelManager.Instance && LevelManager.Instance.Players.Count > 0)
+        {
+            LevelManager.Instance.Players[0].onRespawn.RemoveListener(OnPlayerRespawn);
+        }
+        LevelManager.Instance.onCheckpointSaved -= CheckpointSaved;
     }
 
 
@@ -86,4 +94,6 @@ public class EventManager : MonoBehaviour, IEventManager
     public void RestartLevel() => _onRestartLevel?.Invoke();
     public void StartLevel() => _onStartLevel?.Invoke();
     public void RealitySwitch(float duration) => _onRealitySwitch?.Invoke(duration);
+    public void SubCheckpoint(Action action) => _onCheckpoint += action;
+    public void UnSubCheckpoint(Action action) => _onCheckpoint -= action;
 }

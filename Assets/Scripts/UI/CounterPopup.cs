@@ -18,10 +18,9 @@ public class CounterPopup : Popup
     [SerializeField] private float fadeInDuration = 1f;
     [SerializeField] private float stayDuration = 1f;
     [SerializeField] private float fadeOutDuration = 1f;
-    private float _endValue = 0f;
-
-    private float _counter = 0f;
     private bool _counting = false;
+
+    private IGameManager _gameManager;
     
     protected override void InitPopup()
     {
@@ -30,6 +29,7 @@ public class CounterPopup : Popup
         eventManager.SubDeath(OnDeath);
         eventManager.SubGoalReached(OnGoalReached);
         deathCountText.alpha = 0f;
+        _gameManager = ServiceLocator.Instance.Get<IGameManager>();
         // eventManager.SubRealitySwitch(RealitySwitch);
         // counterText.gameObject.SetActive(false);
     }
@@ -45,7 +45,6 @@ public class CounterPopup : Popup
         
         sequence.Play();
 
-        _counter = 0f;
         _counting = true;
     }
 
@@ -53,8 +52,7 @@ public class CounterPopup : Popup
     {
         if (_counting)
         {
-            _counter += Time.deltaTime;
-            counterText.text = _counter.ToString("F2");
+            counterText.text = _gameManager.TotalRunTime().ToString("F2");
         }
     }
 
@@ -83,37 +81,6 @@ public class CounterPopup : Popup
         sequence.Append(deathCountText.DOFade(0.0f, fadeOutDuration));
 
         sequence.Play();
-    }
-
-    private void RealitySwitch(float duration)
-    {
-        counterText.gameObject.SetActive(true);
-        _counter = duration;
-        counterText.text = _counter.ToString("F2");
-        Sequence sequence = DOTween.Sequence();
-        //Bounce the counter elastically
-        sequence.Append(counterText.transform.DOScale(elasticScale, elasticDuration).SetEase(elasticEase));
-        
-        //Return the counter back to its original scale
-        sequence.Append(counterText.transform.DOScale(Vector3.one, elasticDuration).SetEase(elasticEase));
-        
-        sequence.Play();
-        
-        //Update the numeric value of the text
-        DOTween.To(() => _counter, x => _counter = x, 0, duration)
-            .OnUpdate(UpdateCounterText)
-            .SetEase(Ease.Linear).
-            OnComplete(() =>
-            {
-                counterText.gameObject.SetActive(false);
-            });
-
-    }
-    
-    // Custom callback to update the counterText during the animation
-    private void UpdateCounterText()
-    {
-        counterText.text = _counter.ToString("F2");
     }
 
     private void OnDestroy()

@@ -17,7 +17,6 @@ public class PopupSettings : ScriptableObject
         options.Location = Vector3.zero;
         options.MmSoundManagerTrack = MMSoundManager.MMSoundManagerTracks.Sfx;
 
-        Debug.Log("Play Sound");
         MMSoundManager.Instance.PlaySound(button, options);
     }
 }
