@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public class Conversation : MonoBehaviour
 {
+    [SerializeField] private PopupSettings settings;
     [SerializeField] TextMeshProUGUI textBox;
     [SerializeField] private UnityEvent onConversationStart; 
     [SerializeField] private List<string> dialogue = new();
@@ -57,6 +58,7 @@ public class Conversation : MonoBehaviour
         if (textBox == null) return;
         if(_dialogue.Count>0)
         {
+            settings.PlayButton();
             textBox.SetText(_dialogue.Dequeue());//set text
         }
         else
