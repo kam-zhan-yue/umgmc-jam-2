@@ -26,7 +26,7 @@ public class DialoguePopup : Popup
         nameText.SetText(actorName);
         // dialogueText.SetText(_text);
         string text = string.Empty;
-        typeWriterTween = DOTween.To(() => text, _x => text = _x, dialogue, dialogue.Length / speed)
+        typeWriterTween = DOTween.To(() => text, x => text = x, dialogue, dialogue.Length / speed)
             .SetEase(Ease.Linear)
             .OnUpdate(() =>
             {

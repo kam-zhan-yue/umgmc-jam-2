@@ -34,7 +34,6 @@ public class Recorder : MonoBehaviour
 
     private void OnStartLevel()
     {
-        Debug.Log($"OnStartLevel Recordings: {_recordings.Count}");
         //Start Recording the current player run
         
         //Also restart all existing recordings

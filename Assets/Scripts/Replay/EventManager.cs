@@ -11,6 +11,7 @@ public class EventManager : MonoBehaviour, IEventManager
     private Action _onStartLevel;
     private Action _onGoalReached;
     private Action _onRestartLevel;
+    private Action<float> _onRealitySwitch;
 
     private void Awake()
     {
@@ -74,8 +75,12 @@ public class EventManager : MonoBehaviour, IEventManager
     public void UnSubStartLevel(Action action) => _onStartLevel -= action;
     public void SubDeath(Action action) => _onDeath += action;
     public void UnSubDeath(Action action) => _onDeath -= action;
+    public void SubRealitySwitch(Action<float> action) => _onRealitySwitch += action;
+    public void UnSubRealitySwitch(Action<float> action) => _onRealitySwitch -= action;
+
     public void Death() => _onDeath?.Invoke();
     public void GoalReached() => _onGoalReached?.Invoke();
     public void RestartLevel() => _onRestartLevel?.Invoke();
     public void StartLevel() => _onStartLevel?.Invoke();
+    public void RealitySwitch(float duration) => _onRealitySwitch?.Invoke(duration);
 }

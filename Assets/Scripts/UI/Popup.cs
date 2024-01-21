@@ -16,7 +16,7 @@ public abstract class Popup : MonoBehaviour
     
     public Action<Popup> onCloseButtonClicked = null;
 
-    private void Awake()
+    private void Start()
     {
         InitPopup();
     }

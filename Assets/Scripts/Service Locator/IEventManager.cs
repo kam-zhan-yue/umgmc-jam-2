@@ -10,4 +10,7 @@ public interface IEventManager : IGameService
     public void UnSubStartLevel(Action action);
     public void SubDeath(Action action);
     public void UnSubDeath(Action action);
+    public void SubRealitySwitch(Action<float> action);
+    public void UnSubRealitySwitch(Action<float> action);
+    public void RealitySwitch(float duration);
 }

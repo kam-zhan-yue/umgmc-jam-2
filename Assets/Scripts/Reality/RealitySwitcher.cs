@@ -30,8 +30,6 @@ public class RealitySwitcher : MonoBehaviour
 
     [SerializeField] private float realitySwitchCooldown = 1f;
     [SerializeField] private float realityInstabilityCooldown = 1f;
-    [SerializeField] private FloatReference realitySwitchVariable;
-    [SerializeField] private FloatReference switchBackVariable;
     private StopWatch _realitySwitcherTimer;
     private StopWatch _switchBackTimer;
     
@@ -39,18 +37,19 @@ public class RealitySwitcher : MonoBehaviour
     {
         ServiceLocator.Instance.Get<IRealityManager>().InitReality(timeline);
         ActivateMasks(timeline);
-        _realitySwitcherTimer = new(realitySwitchVariable, realitySwitchCooldown);
-        _switchBackTimer = new(switchBackVariable, realityInstabilityCooldown);
+        _realitySwitcherTimer = new(realitySwitchCooldown);
+        _switchBackTimer = new(realityInstabilityCooldown);
     }
 
     private void Update()
     {
-        if(_realitySwitcherTimer.UpdateTimer() && !_realitySwitcherTimer.isChecked) // can swtich time
+        bool updateTimer = _realitySwitcherTimer.UpdateTimer();
+        bool isChecked = _realitySwitcherTimer.isChecked;
+        if(updateTimer && !isChecked) // can swtich time
         {
-
             if (ChangeReality())
             {
-                _switchBackTimer = new(switchBackVariable, realityInstabilityCooldown);
+                _switchBackTimer = new(realityInstabilityCooldown);
                 _realitySwitcherTimer.isChecked = true;
             }
         }
@@ -60,8 +59,7 @@ public class RealitySwitcher : MonoBehaviour
             {
                 if (timeline != Timeline.Present)
                 {
-                    Transition(Timeline.Present);
-                    //Debug.Log("Timeline disto back to present");
+                    Transition(Timeline.Present, false);
                     _realitySwitcherTimer.ForceReset();
                 }
             }
@@ -72,30 +70,21 @@ public class RealitySwitcher : MonoBehaviour
     private bool ChangeReality()
     {
         bool alteredTime = false;
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !_transitioning)
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Transition(Timeline.Past);
+            Transition(Timeline.Past, true);
             alteredTime = true;
-            //Debug.Log("Timeline to the past");
         }
-        #region - not in use -
-        //if (Input.GetKeyDown(KeyCode.Mouse2) && !_transitioning)
-        //{
-        //    //The reality will shift back automatically for the instability of time and space distortion 
-        //    //Transition(Timeline.Present);
-        //}
-        #endregion
-        if (Input.GetKeyDown(KeyCode.Mouse1) && !_transitioning)
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            Transition(Timeline.Future);
+            Transition(Timeline.Future, true);
             alteredTime = true;
-            //Debug.Log("Timeline to the future");
         }
 
         return alteredTime;
     }
 
-    private void Transition(Timeline newTimeline)
+    private void Transition(Timeline newTimeline, bool playAnimation)
     {
         if (timeline == newTimeline)
         {
@@ -103,6 +92,11 @@ public class RealitySwitcher : MonoBehaviour
         }
 
         switchFeedback.PlayFeedbacks();
+
+        if (playAnimation)
+        {
+            ServiceLocator.Instance.Get<IEventManager>().RealitySwitch(realityInstabilityCooldown);
+        }
         
         previousTimeline = timeline;
         timeline = newTimeline;

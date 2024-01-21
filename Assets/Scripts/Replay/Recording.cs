@@ -29,7 +29,6 @@ public class Recording
     {
         _replayQueue = new Queue<ReplayData>(_originalQueue);
         _recordingState = RecordingState.Playing;
-        Debug.Log("Play Recording");
     }
 
     public bool PlayNextFrame()

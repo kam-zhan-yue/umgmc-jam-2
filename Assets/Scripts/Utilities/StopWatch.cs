@@ -5,17 +5,15 @@ using UnityEngine;
 public class StopWatch
 {
     private float timeInterval = 1f; public float Cooldown { get { return timeInterval; } }
-    private FloatReference _internalTimer;
+    private float _internalTimer = 0f;
     public bool isChecked = false;
     public StopWatch()
     {
 
     }
 
-    public StopWatch(FloatReference floatReference, float timeInterval)
+    public StopWatch(float timeInterval)
     {
-        _internalTimer = floatReference;
-        _internalTimer.Value = 0f;
         this.timeInterval = timeInterval;
     }
 
@@ -25,7 +23,7 @@ public class StopWatch
     /// <returns></returns>
     public bool UpdateTimer()
     {
-        _internalTimer.Value += Time.deltaTime;
+        _internalTimer += Time.deltaTime;
         if (_internalTimer >= timeInterval)
         {
             timeInterval = 0;
