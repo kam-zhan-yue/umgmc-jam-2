@@ -23,8 +23,10 @@ MonoBehaviour:
       actor: Priest
       custom: 0
       customName: 
-      message: Set forth, brave one. Inside, you'll face the present, the past, and
-        the future.
+      message: 'Set forth, brave one. Inside, you''ll face the
+
+        present,
+        the past, and the future.'
       animationName: 
   - actions:
     - id: Priest
@@ -32,6 +34,6 @@ MonoBehaviour:
       actor: Priest
       custom: 0
       customName: 
-      message: "Then, ascend the Tower of Epochs. At its peak, the Timeless End awaits
-        \u2013 your final challenge to save the world."
+      message: "Then, ascend the Tower of Epochs. At its peak, the \nTimeless End
+        awaits \u2013 your final challenge to save \nthe world."
       animationName: 

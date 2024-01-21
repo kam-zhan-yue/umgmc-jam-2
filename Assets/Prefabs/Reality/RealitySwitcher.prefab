@@ -3809,9 +3809,22 @@ MonoBehaviour:
   futureBackgroundMask: {fileID: 7655826422551137304}
   pastBackgroundMask: {fileID: 5763733147746808969}
   switchFeedback: {fileID: 4702492328035733670}
-  targetScale: {x: 20, y: 20, z: 20}
-  realitySwitchCooldown: 3
+  targetScale: {x: 10, y: 10, z: 10}
+  scaleDuration: 1
+  realitySwitchCooldown: 0.1
   realityInstabilityCooldown: 3
+  realitySwitchVariable:
+    _usage: 0
+    _value: 0
+    _constant: {fileID: 0}
+    _variable: {fileID: 0}
+    _variableInstancer: {fileID: 0}
+  switchBackVariable:
+    _usage: 0
+    _value: 0
+    _constant: {fileID: 0}
+    _variable: {fileID: 0}
+    _variableInstancer: {fileID: 0}
 --- !u!1 &3724016427611754121
 GameObject:
   m_ObjectHideFlags: 0

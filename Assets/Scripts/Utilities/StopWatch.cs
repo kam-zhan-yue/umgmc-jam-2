@@ -1,18 +1,21 @@
 ﻿using System;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 public class StopWatch
 {
     private float timeInterval = 1f; public float Cooldown { get { return timeInterval; } }
-    private float internalTimer = 0f;
+    private FloatReference _internalTimer;
     public bool isChecked = false;
     public StopWatch()
     {
 
     }
 
-    public StopWatch(float timeInterval)
+    public StopWatch(FloatReference floatReference, float timeInterval)
     {
+        _internalTimer = floatReference;
+        _internalTimer.Value = 0f;
         this.timeInterval = timeInterval;
     }
 
@@ -22,8 +25,8 @@ public class StopWatch
     /// <returns></returns>
     public bool UpdateTimer()
     {
-        internalTimer += Time.deltaTime;
-        if (internalTimer >= timeInterval)
+        _internalTimer.Value += Time.deltaTime;
+        if (_internalTimer >= timeInterval)
         {
             timeInterval = 0;
             return true;

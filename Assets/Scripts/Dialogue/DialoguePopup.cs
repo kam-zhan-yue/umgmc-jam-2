@@ -40,7 +40,7 @@ public class DialoguePopup : Popup
             {
                 this.dialogueText.SetText(dialogue);
                 onComplete?.Invoke();
-            });
+            }).SetUpdate(true);
     }
 
     public void Stop()

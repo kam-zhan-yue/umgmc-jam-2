@@ -5,6 +5,7 @@ using Common;
 using DG.Tweening;
 using MoreMountains.Feedbacks;
 using Unity.Collections;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 public class RealitySwitcher : MonoBehaviour
@@ -19,7 +20,7 @@ public class RealitySwitcher : MonoBehaviour
     [SerializeField] private MMFeedbacks switchFeedback;
 
     [SerializeField] private Vector3 targetScale = new Vector3(20f, 20f, 20f);
-    //[SerializeField] private float scaleDuration = 0.5f;
+    [SerializeField] private float scaleDuration = 0.5f;
 
     //Private Variables
     private Timeline previousTimeline = Timeline.Present;
@@ -29,37 +30,39 @@ public class RealitySwitcher : MonoBehaviour
 
     [SerializeField] private float realitySwitchCooldown = 1f;
     [SerializeField] private float realityInstabilityCooldown = 1f;
-    private StopWatch realitySwitcherTimer;
-    private StopWatch switchBackTimer;
+    [SerializeField] private FloatReference realitySwitchVariable;
+    [SerializeField] private FloatReference switchBackVariable;
+    private StopWatch _realitySwitcherTimer;
+    private StopWatch _switchBackTimer;
     
     private void Start()
     {
         ServiceLocator.Instance.Get<IRealityManager>().InitReality(timeline);
         ActivateMasks(timeline);
-        realitySwitcherTimer = new(realitySwitchCooldown);
-        switchBackTimer = new(realityInstabilityCooldown);
+        _realitySwitcherTimer = new(realitySwitchVariable, realitySwitchCooldown);
+        _switchBackTimer = new(switchBackVariable, realityInstabilityCooldown);
     }
 
     private void Update()
     {
-        if(realitySwitcherTimer.UpdateTimer() && !realitySwitcherTimer.isChecked) // can swtich time
+        if(_realitySwitcherTimer.UpdateTimer() && !_realitySwitcherTimer.isChecked) // can swtich time
         {
 
             if (ChangeReality())
             {
-                switchBackTimer = new(realityInstabilityCooldown);
-                realitySwitcherTimer.isChecked = true;
+                _switchBackTimer = new(switchBackVariable, realityInstabilityCooldown);
+                _realitySwitcherTimer.isChecked = true;
             }
         }
         else //you cant swtich time, when the switch back timer reaches 0, switch back to present, and you can use the switcher again
         {
-            if(switchBackTimer.UpdateTimer())
+            if(_switchBackTimer.UpdateTimer())
             {
                 if (timeline != Timeline.Present)
                 {
                     Transition(Timeline.Present);
                     //Debug.Log("Timeline disto back to present");
-                    realitySwitcherTimer.ForceReset();
+                    _realitySwitcherTimer.ForceReset();
                 }
             }
 
@@ -156,7 +159,7 @@ public class RealitySwitcher : MonoBehaviour
     private void TransitionTween(Transform maskTransform)
     {
         maskTransform.localScale = Vector3.zero;
-        maskTransform.DOScale(targetScale, realitySwitchCooldown).OnComplete(EndTransition);
+        maskTransform.DOScale(targetScale, scaleDuration).OnComplete(EndTransition);
     }
 
     private void EndTransition()
