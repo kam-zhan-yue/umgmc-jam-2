@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Common;
@@ -11,6 +12,7 @@ public class CounterPopup : Popup
 {
     [SerializeField] private TMP_Text deathCountText;
     [SerializeField] private TMP_Text counterText;
+    [SerializeField] private TMP_Text fastestRunText;
     [SerializeField] private Vector3 elasticScale = new Vector3(1.5f, 1.5f, 1.0f);
     [SerializeField] private float elasticDuration = 0.5f;
     [SerializeField] private Ease elasticEase = Ease.OutElastic;
@@ -30,8 +32,18 @@ public class CounterPopup : Popup
         eventManager.SubGoalReached(OnGoalReached);
         deathCountText.alpha = 0f;
         _gameManager = ServiceLocator.Instance.Get<IGameManager>();
-        // eventManager.SubRealitySwitch(RealitySwitch);
-        // counterText.gameObject.SetActive(false);
+        _gameManager.SubFastestRun(UpdateFastestRun);
+        fastestRunText.gameObject.SetActive(false);
+    }
+
+    private void UpdateFastestRun()
+    {
+        float fastestRun = _gameManager.FastestRunTime();
+        if (fastestRun > 0f)
+        {
+            fastestRunText.gameObject.SetActive(true);
+            fastestRunText.SetText(FormatTime(fastestRun));
+        }
     }
     
     private void OnStartLevel()
@@ -52,7 +64,7 @@ public class CounterPopup : Popup
     {
         if (_counting)
         {
-            counterText.text = _gameManager.TotalRunTime().ToString("F2");
+            counterText.text = FormatTime(_gameManager.TotalRunTime());
         }
     }
 
@@ -82,6 +94,19 @@ public class CounterPopup : Popup
 
         sequence.Play();
     }
+    
+    private string FormatTime(float totalSeconds)
+    {
+        TimeSpan timeSpan = TimeSpan.FromSeconds(totalSeconds);
+        if (timeSpan.Minutes > 0)
+        {
+            return $"{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}:{timeSpan.Milliseconds / 10:D2}.{timeSpan.Milliseconds % 10:D2}";
+        }
+        else
+        {
+            return $"{timeSpan.Seconds:D2}.{timeSpan.Milliseconds / 10:D2}";
+        }
+    }
 
     private void OnDestroy()
     {
@@ -89,6 +114,6 @@ public class CounterPopup : Popup
         eventManager.UnSubStartLevel(OnStartLevel);
         eventManager.UnSubDeath(OnDeath);
         eventManager.UnSubGoalReached(OnGoalReached);
-        // eventManager.UnSubRealitySwitch(RealitySwitch);
+        _gameManager.UnSubFastestRun(UpdateFastestRun);
     }
 }

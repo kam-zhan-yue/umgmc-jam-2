@@ -53,7 +53,7 @@ MonoBehaviour:
   futureBackgroundMask: {fileID: 7655826422551137304}
   pastBackgroundMask: {fileID: 5763733147746808969}
   switchFeedback: {fileID: 8109591124744837456}
-  targetScale: {x: 10, y: 10, z: 10}
+  targetScale: {x: 15, y: 15, z: 15}
   scaleDuration: 1
   realitySwitchCooldown: 1
   realityInstabilityCooldown: 1

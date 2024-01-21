@@ -70,11 +70,14 @@ public class EventManager : MonoBehaviour, IEventManager
 
     private void OnDisable()
     {
-        if (LevelManager.Instance && LevelManager.Instance.Players.Count > 0)
+        if (LevelManager.Instance != null)
         {
-            LevelManager.Instance.Players[0].onRespawn.RemoveListener(OnPlayerRespawn);
+            if (LevelManager.Instance.Players != null)
+            {
+                LevelManager.Instance.Players[0].onRespawn.RemoveListener(OnPlayerRespawn);
+            }
+            LevelManager.Instance.onCheckpointSaved -= CheckpointSaved;
         }
-        LevelManager.Instance.onCheckpointSaved -= CheckpointSaved;
     }
 
 

@@ -7,13 +7,12 @@ using UnityEngine.Events;
 
 public class Conversation : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI textBox;
     [SerializeField] private UnityEvent onConversationStart; 
     [SerializeField] private List<string> dialogue = new();
     [SerializeField] private GameObject conversationUI;
     [SerializeField] private UnityEvent onConversationEnd; 
-
-
-    private TextMeshProUGUI textBox;
+    
     private Queue<string> _dialogue = new();
 
 
@@ -23,7 +22,6 @@ public class Conversation : MonoBehaviour
     void Start()
     {
         PackDialogue();
-        textBox = conversationUI.GetComponentInChildren<TextMeshProUGUI>();
         conversationUI.SetActive(false);
     }
 
@@ -63,6 +61,8 @@ public class Conversation : MonoBehaviour
         }
         else
         {
+            Debug.Log("End Dialogue");
+            conversationUI.SetActive(false);
             onConversationEnd?.Invoke();
             GameManager.Instance.Reset();
         }
