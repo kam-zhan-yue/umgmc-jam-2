@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WhisperingSpell
   m_EditorClassIdentifier: 
   useCamera: 0
-  playOnce: 1
+  playOnce: 0
   actors: []
   groups:
   - actions:
@@ -62,4 +62,12 @@ MonoBehaviour:
       custom: 0
       customName: 
       message: Use the [Shift] to sprint, and press it twice to double jump.
+      animationName: 
+  - actions:
+    - id: Whispering
+      type: 0
+      actor: Whispering
+      custom: 0
+      customName: 
+      message: Feel free to talk to me at any time.
       animationName: 

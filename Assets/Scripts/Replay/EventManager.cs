@@ -15,6 +15,7 @@ public class EventManager : MonoBehaviour, IEventManager
     private Action<float> _onRealitySwitch;
     private Action _onCheckpoint;
     private int _deathCount = 0;
+    private bool _gameStarted = false;
 
     private void Awake()
     {
@@ -43,7 +44,12 @@ public class EventManager : MonoBehaviour, IEventManager
     [Button]
     public void TutorialOver()
     {
-        StartLevel();
+        Debug.Log($"Tutorial Over {_gameStarted}");
+        if (!_gameStarted)
+        {
+            StartLevel();
+            _gameStarted = true;
+        }
     }
 
     private void OnPlayerRespawn()
