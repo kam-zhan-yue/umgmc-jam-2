@@ -9,10 +9,15 @@ using UnityEngine.UI;
 
 public class CounterPopup : Popup
 {
+    [SerializeField] private TMP_Text deathCountText;
     [SerializeField] private TMP_Text counterText;
     [SerializeField] private Vector3 elasticScale = new Vector3(1.5f, 1.5f, 1.0f);
     [SerializeField] private float elasticDuration = 0.5f;
     [SerializeField] private Ease elasticEase = Ease.OutElastic;
+
+    [SerializeField] private float fadeInDuration = 1f;
+    [SerializeField] private float stayDuration = 1f;
+    [SerializeField] private float fadeOutDuration = 1f;
     private float _endValue = 0f;
 
     private float _counter = 0f;
@@ -24,6 +29,7 @@ public class CounterPopup : Popup
         eventManager.SubStartLevel(OnStartLevel);
         eventManager.SubDeath(OnDeath);
         eventManager.SubGoalReached(OnGoalReached);
+        deathCountText.alpha = 0f;
         // eventManager.SubRealitySwitch(RealitySwitch);
         // counterText.gameObject.SetActive(false);
     }
@@ -57,9 +63,26 @@ public class CounterPopup : Popup
         _counting = false;
     }
 
-    private void OnDeath()
+    private void OnDeath(int deaths)
     {
         _counting = false;
+        // Set initial alpha to zero
+        deathCountText.alpha = 0f;
+        deathCountText.SetText($"Deaths: {deaths}");
+
+        // Create a sequence to perform the fade in, stay, and fade out animations
+        Sequence sequence = DOTween.Sequence();
+
+        // Fade In
+        sequence.Append(deathCountText.DOFade(1.0f, fadeInDuration));
+
+        // Stay
+        sequence.AppendInterval(stayDuration);
+
+        // Fade Out
+        sequence.Append(deathCountText.DOFade(0.0f, fadeOutDuration));
+
+        sequence.Play();
     }
 
     private void RealitySwitch(float duration)

@@ -55,7 +55,7 @@ public class Recorder : MonoBehaviour
         // RestartReplay();
     }
 
-    private void OnDeath()
+    private void OnDeath(int deaths)
     {
         StopRecording();
     }
