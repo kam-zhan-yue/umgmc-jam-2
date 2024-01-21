@@ -55,3 +55,11 @@ MonoBehaviour:
         and
         the [Right Mouse Button] to travel forward in time.'
       animationName: 
+  - actions:
+    - id: Whispering
+      type: 0
+      actor: Whispering
+      custom: 0
+      customName: 
+      message: Use the [Shift] to sprint, and press it twice to double jump.
+      animationName: 
