@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using MoreMountains.CorgiEngine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Conversation : MonoBehaviour
 {
-
+    [SerializeField] private UnityEvent onConversationStart; 
     [SerializeField] private List<string> dialogue = new();
     [SerializeField] private GameObject conversationUI;
 
@@ -36,6 +37,7 @@ public class Conversation : MonoBehaviour
         {
             if(!conversationStarted)
             {
+                onConversationStart?.Invoke();
                 conversationStarted = true;
                 LoadNextConversation();
             }

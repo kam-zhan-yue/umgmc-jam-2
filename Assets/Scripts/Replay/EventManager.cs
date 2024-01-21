@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Common;
 using MoreMountains.CorgiEngine;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class EventManager : MonoBehaviour, IEventManager
@@ -35,6 +36,7 @@ public class EventManager : MonoBehaviour, IEventManager
         Death();
     }
 
+    [Button]
     public void TutorialOver()
     {
         StartLevel();

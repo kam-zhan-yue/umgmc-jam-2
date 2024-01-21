@@ -47,12 +47,11 @@ public class Recorder : MonoBehaviour
 
     private void OnGoalReached()
     {
-        // StartReplay();
+        StopRecording();
     }
 
     private void OnRestartLevel()
     {
-        // RestartReplay();
     }
 
     private void OnDeath(int deaths)

@@ -6313,7 +6313,7 @@ MonoBehaviour:
         PositionMode: 0
         InstantiateParticlesPosition: {fileID: 0}
         TargetWorldPosition: {x: 0, y: 0, z: 0}
-        Offset: {x: 0, y: 2.9, z: 0}
+        Offset: {x: 0, y: -0.29, z: 0}
         NestParticles: 0
         ApplyRotation: 0
         ApplyScale: 0
