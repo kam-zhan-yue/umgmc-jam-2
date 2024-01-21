@@ -91,6 +91,7 @@ public class RealitySwitcher : MonoBehaviour
             return;
         }
 
+        Debug.Log("Transition, Play Feedback");
         switchFeedback.PlayFeedbacks();
 
         if (playAnimation)
@@ -110,6 +111,7 @@ public class RealitySwitcher : MonoBehaviour
 
         if (realityManager.TryGetReality(timeline, out Reality reality))
         {
+            Debug.Log("Transition, Show Timeline");
             reality.Show();
             reality.ActivateColliders();
         }

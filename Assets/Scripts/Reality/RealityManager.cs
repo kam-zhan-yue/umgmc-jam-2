@@ -13,6 +13,7 @@ public class RealityManager : MonoBehaviour, IRealityManager
     private void Awake()
     {
         ServiceLocator.Instance.Register<IRealityManager>(this);
+        UpdateReality();
     }
 
     public void InitReality(Timeline timeline)
